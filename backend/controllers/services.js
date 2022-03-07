@@ -29,7 +29,33 @@ const createNewService = (req, res) => {
       });
     });
 };
+/******************************************************************************************************** */
+const getAllServices = (req, res) => {
+  servicesModel
+    .find({})
+    .then((result) => {
+      if (result.length) {
+        res.status(200).json({
+          success: true,
+          message: `All The services`,
+          services: result,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: `No services Yet`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `No services Yet`,
+      });
+    });
+};
 
 module.exports = {
   createNewService,
+  getAllServices,
 };
