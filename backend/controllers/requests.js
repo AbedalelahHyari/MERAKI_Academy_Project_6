@@ -3,11 +3,8 @@ const workerModel = require("../database/models/workerSchema");
 
 const creatNewRequest = (req, res) => {
   const worker = req.params.id;
-  const { status, requester } = req.body;
   const newRequest = new requestsModel({
-    status,
-    // requester:req.token.userId
-    requester,
+    requester: req.token.userId,
     worker,
   });
 
@@ -34,10 +31,12 @@ const creatNewRequest = (req, res) => {
       });
     });
 };
-
+/************************************************************************************** */
 const getAllRequests = (req, res) => {
   requestsModel
-    .find({}).populate("worker","name role _id").populate("requester","name role _id")
+    .find({})
+    .populate("worker", "name role _id")
+    .populate("requester", "name role _id")
     .then((result) => {
       if (result.length) {
         res.status(200).json({
@@ -59,8 +58,35 @@ const getAllRequests = (req, res) => {
       });
     });
 };
+/************************************************************************************** */
 
+const getRequestsByWorkerId = (req, res) => {
+  const worker_id = req.params.id;
+  requestsModel
+    .find({ worker: worker_id })
+    .then((result) => {
+      console.log(result);
+      if (!result.length) {
+        return res.status(404).json({
+          success: false,
+          message: `No Requests for this worker with ${worker_id}`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The requests ${worker_id} `,
+        requests: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 module.exports = {
   creatNewRequest,
   getAllRequests,
+  getRequestsByWorkerId,
 };
