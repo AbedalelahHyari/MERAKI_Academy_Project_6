@@ -37,7 +37,7 @@ const creatNewRequest = (req, res) => {
 
 const getAllRequests = (req, res) => {
   requestsModel
-    .find({})
+    .find({}).populate("worker","name role _id").populate("requester","name role _id")
     .then((result) => {
       if (result.length) {
         res.status(200).json({
