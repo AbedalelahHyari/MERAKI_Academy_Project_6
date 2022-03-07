@@ -15,8 +15,8 @@ app.use("/users", usersRouter);
 const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
 
-// const servicesRouter = require("./routes/services");
-// app.use("/services", servicesRouter);
+const servicesRouter = require("./routes/services");
+app.use("/services", servicesRouter);
 
 // const workerRouter = require("./routes/worker");
 // app.use("/workers", workersRouter);
