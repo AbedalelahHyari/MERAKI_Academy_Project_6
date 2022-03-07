@@ -31,6 +31,8 @@ const login = (req, res) => {
             token,
             userId: resultUser._id,
             role: resultUser.role,
+            name:resultUser.name,
+            email:resultUser.email
           });
         } else {
           res.status(403).json({
