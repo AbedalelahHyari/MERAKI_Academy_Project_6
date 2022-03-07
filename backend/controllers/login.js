@@ -8,14 +8,14 @@ const login = (req, res) => {
 
   userModel
     .findOne({ email })
-    .then((result) => {
-      bcrypt.compare(password, result.password, (err, result) => {
+    .then((resultUser) => {
+      bcrypt.compare(password, resultUser.password, (err, result) => {
         if (result) {
           //generate Token
           const payload = {
-            userId: result._id,
-            name: result.name,
-            role: result.role,
+            userId: resultUser._id,
+            name: resultUser.name,
+            role: resultUser.role,
           };
 
           const option = {
@@ -25,12 +25,12 @@ const login = (req, res) => {
           const token = jwt.sign(payload, process.env.SECRET, option);
           checkEmail.push(result.email);
 
-          re.status(200).json({
+          res.status(200).json({
             success: true,
             massage: " Valid login credentials",
             token,
-            userId: result._id,
-            role: result.role,
+            userId: resultUser._id,
+            role: resultUser.role,
           });
         } else {
           res.status(403).json({
