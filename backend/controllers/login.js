@@ -1,0 +1,1 @@
+const loginModel = require("../database/models/user");

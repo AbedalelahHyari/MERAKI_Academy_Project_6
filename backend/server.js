@@ -8,6 +8,22 @@ app.use(cors());
 
 app.use(express.json());
 
+/**************** Routers ******************* */
+const usersRouter = require("./routes/user");
+app.use("/users", usersRouter); 
+
+const loginRouter = require("./routes/login");
+app.use("/login", loginRouter);
+
+const servicesRouter = require("./routes/services");
+app.use("/login", servicesRouter);
+
+
+const workerRouter = require("./routes/worker");
+app.use("/login", workerRouter);
+
+/****************************************** */
+
 const PORT = 5000;
 
 app.listen(PORT, () => {
