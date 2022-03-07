@@ -10,17 +10,16 @@ app.use(express.json());
 
 /**************** Routers ******************* */
 const usersRouter = require("./routes/user");
-app.use("/users", usersRouter); 
+app.use("/users", usersRouter);
 
-const loginRouter = require("./routes/login");
-app.use("/login", loginRouter);
+// const loginRouter = require("./routes/login");
+// app.use("/login", loginRouter);
 
-const servicesRouter = require("./routes/services");
-app.use("/login", servicesRouter);
+// const servicesRouter = require("./routes/services");
+// app.use("/services", servicesRouter);
 
-
-const workerRouter = require("./routes/worker");
-app.use("/login", workerRouter);
+// const workerRouter = require("./routes/worker");
+// app.use("/workers", workersRouter);
 
 /****************************************** */
 
