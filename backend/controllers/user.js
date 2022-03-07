@@ -34,7 +34,34 @@ const createNewUser = (req, res) => {
       });
     });
 };
+/******************************* */
+const getAllUsers = (req, res) => {
+  userModel
+    .find({})
+    .populate("role", "-__v -_id")
+    .then((users) => {
+      if (users.length) {
+        res.status(200).json({
+          success: true,
+          message: `All The Users`,
+          users: users,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: `No Users Yet`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `No users Yet`,
+      });
+    });
+};
 
 module.exports = {
   createNewUser,
+  getAllUsers,
 };
