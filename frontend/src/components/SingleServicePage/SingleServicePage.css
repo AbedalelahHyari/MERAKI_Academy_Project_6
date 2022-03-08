@@ -1,11 +1,13 @@
 .ContainerSingle {
   display: flex;
   flex-direction: column;
+ 
 }
 
 .AllOneServices {
   display: flex;
   gap: 15px;
+  margin-top: 50px;
 }
 
 .SingleService {
@@ -20,7 +22,7 @@ border-radius: 15px;
   font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
     "Helvetica Neue", Arial, sans-serif;
   text-align: start;
-  margin: 20px;
+  margin:20px ;
   padding: 10px;
 }
 
