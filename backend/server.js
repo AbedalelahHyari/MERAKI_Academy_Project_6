@@ -20,8 +20,8 @@ app.use("/services", servicesRouter);
 
 const requestRouter = require("./routes/request");
 app.use("/request", requestRouter);
-// const workerRouter = require("./routes/worker");
-// app.use("/workers", workersRouter);
+const workerRouter = require("./routes/worker");
+app.use("/workers", workerRouter);
 
 /****************************************** */
 
