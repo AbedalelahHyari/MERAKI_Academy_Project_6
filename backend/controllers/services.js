@@ -32,7 +32,8 @@ const createNewService = (req, res) => {
 /******************************************************************************************************** */
 const getAllServices = (req, res) => {
   servicesModel
-    .find({}).populate("workers","name _id role")
+    .find({})
+    .populate("workers", "name _id role")
     .then((result) => {
       if (result.length) {
         res.status(200).json({
@@ -54,8 +55,35 @@ const getAllServices = (req, res) => {
       });
     });
 };
+/********************************************************************** */
 
+const getServiceById = (req, res) => {
+  let service_id = req.params.id;
+  servicesModel
+    .findById(service_id)
+    .exec()
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The service not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The service ${service_id} `,
+        service: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 module.exports = {
   createNewService,
   getAllServices,
+  getServiceById,
 };
