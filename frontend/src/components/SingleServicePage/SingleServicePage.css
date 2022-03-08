@@ -1,0 +1,85 @@
+.ContainerSingle {
+  display: flex;
+  flex-direction: column;
+}
+
+.AllOneServices {
+  display: flex;
+  gap: 15px;
+}
+
+.SingleService {
+  flex-direction: column;
+  display: flex;
+  width: 700px;
+  height: 100%;
+
+  /* gap: 10px; */
+  border: 0.5px solid blue;
+border-radius: 15px;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  text-align: start;
+  margin: 20px;
+  padding: 10px;
+}
+
+.descriptionOneSer{
+    margin-left: 20px;
+  
+}
+
+.nameOneSer{
+    margin-left: 20px;
+ 
+}
+
+.flexColAllWorker{
+
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid orange;
+    margin: 20px;
+    padding: 10px;
+}
+
+.Header{
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    margin: 20px;
+    border-bottom: 0.5px solid rgb(160, 160, 160);
+
+    
+}
+.ContainerWorkers {
+  display: flex;
+  gap: 25px;
+
+  width: 400px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.worker_info {
+  display: flex;
+  gap: 7px;
+
+  height: 50px;
+  width: 100px;
+  align-items: center;
+}
+.worker_info:hover{
+        background-color: aliceblue;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+.img_worker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  box-shadow: 0 0 3px rgb(145, 144, 144);
+}
