@@ -1,8 +1,9 @@
 import "./App.css";
 import { Route, Router, Routes } from "react-router-dom";
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import Register from "./components/Register/Register";
+
 import Home from "./components/Home/Home";
+import Registration from "./components/Registration/Registration";
 
 
 
@@ -21,7 +22,7 @@ function App() {
             </Routes>
           </div>
           {/* {state.isLoggedIn ? <></> : <Register />} */}
-          { <Registration/>}
+           <Registration/>
         </div>
     </>
   );
