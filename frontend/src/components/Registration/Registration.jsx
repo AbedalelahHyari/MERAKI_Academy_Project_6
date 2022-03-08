@@ -33,7 +33,22 @@ const Registration = () => {
     }
   };
   /************************************************************************ */
-
+  const login = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+      if (res.data.success) {
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data);
+      } else throw Error;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.log(error);
+      }
+    }
+  };
   /*************************************************************** */
   return (
     <>
@@ -129,7 +144,9 @@ const Registration = () => {
             setPassword(e.target.value);
           }}
         />
-        <button className="loginButton">Login</button>
+        <button onClick={login} className="loginButton">
+          Login
+        </button>
       </div>
     </>
   );
