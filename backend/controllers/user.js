@@ -62,8 +62,35 @@ const getAllUsers = (req, res) => {
       });
     });
 };
+/************************************************************************ */
+const getUserById = (req, res) => {
+  let user_id = req.params.id;
+  userModel
+    .findById(user_id)
+    .exec()
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The user not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The user with id ===> ${user_id}`,
+        user: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 
 module.exports = {
   createNewUser,
   getAllUsers,
+  getUserById,
 };

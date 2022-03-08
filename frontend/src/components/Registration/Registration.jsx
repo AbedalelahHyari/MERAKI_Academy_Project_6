@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./Registration.css";
 import axios from "axios";
+import { loginRed } from "../../reducers/login/index";
+/****************************************** */
 const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,6 +13,16 @@ const Registration = () => {
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
+  /****************************************** */
+  const dispatch = useDispatch();
+  const state = useSelector((state) => {
+    return {
+      token: state.loginReducer.token,
+      isLoggedIn: state.loginReducer.isLoggedIn,
+    };
+  });
+  console.log(state.token);
+  console.log(state.isLoggedIn);
   /*************************************** */
 
   const register = async () => {
@@ -41,6 +54,7 @@ const Registration = () => {
       });
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
+        dispatch(loginRed(res.data.token));
         console.log(res.data);
       } else throw Error;
     } catch (error) {
