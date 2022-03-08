@@ -2,7 +2,6 @@ const initialState = {
   token: "" || localStorage.getItem("token"),
   isLoggedIn: localStorage.getItem("token") ? true : false,
 };
-
 const loginReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "LOG_IN":
