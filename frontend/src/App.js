@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Registration from "./components/Registration/Registration";
 import SingleServicePage from "./components/SingleServicePage/SingleServicePage";
 import WorkerPage from "./components/WorkerPage/WorkerPage";
+import Navigation from "./components/Navigation/Navigation";
 
 function App() {
   const state = useSelector((state) => {
@@ -15,6 +16,7 @@ function App() {
   });
   return (
     <>
+     {state.isLoggedIn ? <Navigation /> : <></>}
       <div className="App">
         <div className="Home">
           <Routes>

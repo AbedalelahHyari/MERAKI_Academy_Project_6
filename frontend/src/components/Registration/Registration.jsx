@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import "./Registration.css";
 import axios from "axios";
 import { loginRed } from "../../reducers/login/index";
 /****************************************** */
 const Registration = () => {
+  const navigation = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,7 +56,21 @@ const Registration = () => {
       });
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
-        dispatch(loginRed(res.data.token));
+        localStorage.setItem("user_id", res.data.userId);
+        localStorage.setItem("name", res.data.name);
+        dispatch(
+          loginRed({
+            token: res.data.token,
+            user_id: res.data.userId,
+            name: res.data.name,
+          })
+        );
+        if (res.data.role == "worker") {
+          navigation(`/worker/${res.data.userId}`);
+        } else {
+          navigation("/home");
+        }
+
         console.log(res.data);
       } else throw Error;
     } catch (error) {
@@ -133,8 +149,8 @@ const Registration = () => {
           className="role"
         >
           <option>Role</option>
-          <option value="User">User</option>
-          <option value="Worker">Worker</option>
+          <option value="user">User</option>
+          <option value="worker">Worker</option>
         </select>
         <button onClick={register} className="registerButton">
           Register
@@ -152,7 +168,7 @@ const Registration = () => {
         />
         <input
           className="password"
-          type="text"
+          type="password"
           placeholder="Password"
           onChange={(e) => {
             setPassword(e.target.value);
