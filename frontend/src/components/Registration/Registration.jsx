@@ -33,7 +33,7 @@ const Registration = () => {
     }
   };
   /************************************************************************ */
-  
+
   /*************************************************************** */
   return (
     <>
@@ -112,6 +112,25 @@ const Registration = () => {
         </button>
       </div>
       {/**************************************************************************** */}
+      <div className="loginForm">
+        <input
+          className="email"
+          type="text"
+          placeholder="Email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          className="password"
+          type="text"
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <button className="loginButton">Login</button>
+      </div>
     </>
   );
 };
