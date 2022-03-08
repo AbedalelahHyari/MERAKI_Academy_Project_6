@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const workerProfileSchema = new mongoose.Schema({
-  requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
   profession: { type: mongoose.Schema.Types.ObjectId, ref: "Service" },
   workImages: { type: Array },
   phone: { type: String, required: true },
