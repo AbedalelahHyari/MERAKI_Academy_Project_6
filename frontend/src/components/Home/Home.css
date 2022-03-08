@@ -1,0 +1,34 @@
+.Container{
+
+display: flex;
+flex-direction: column;
+
+}
+
+
+.Services{
+    display: flex;
+   gap: 15px;
+   
+}
+
+.oneService{
+    flex-direction: column;
+    display: flex;
+  width: 250px;
+  height: 100%;
+  
+  gap: 15px;
+border: 0.5px solid blue;
+margin: 20px;
+font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+"Helvetica Neue", Arial, sans-serif;
+text-align: start;
+padding: 10px;
+
+}
+
+.oneService:hover{
+    background-color: aliceblue;
+    cursor: pointer;
+}
