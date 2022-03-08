@@ -61,7 +61,7 @@ const getServiceById = (req, res) => {
   let service_id = req.params.id;
   servicesModel
     .findById(service_id)
-    .populate("workers", "name _id role")
+    .populate("workers", "name _id role image")
     .exec()
     .then((result) => {
       if (!result) {

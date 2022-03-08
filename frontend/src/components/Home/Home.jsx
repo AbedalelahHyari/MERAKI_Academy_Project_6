@@ -39,7 +39,7 @@ const Home = () => {
                   }}>
                     {" "}
                     <h2 className="nameSer">{e.name}</h2>
-                    <div className="descriptionSer">{e.description}</div>{" "}
+                    {/* <div className="descriptionSer">{e.description}</div>{" "} */}
                   </div>
                 </>
               );
