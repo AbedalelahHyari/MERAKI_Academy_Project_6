@@ -32,7 +32,7 @@ const createNewService = (req, res) => {
 /******************************************************************************************************** */
 const getAllServices = (req, res) => {
   servicesModel
-    .find({})
+    .find({}).populate("workers","name _id role")
     .then((result) => {
       if (result.length) {
         res.status(200).json({
