@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const serviceSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  workers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Worker" }],
+  workers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   description: { type: String, required: true },
 });
 
