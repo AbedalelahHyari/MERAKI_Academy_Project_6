@@ -2,16 +2,22 @@ const workerModel = require("../database/models/workerSchema");
 const servicesModel = require("../database/models/service");
 
 const workerProfile = (req, res) => {
-  //const workerId = req.params._id;
-  const { workImages, phone, status, ratePerHour, workerImage, profession } =
-    req.body;
-  const newWorker = new workerModel({
+  const {
+    profession,
     workImages,
-    phone,
     status,
+    description,
     ratePerHour,
     workerImage,
+  } = req.body;
+  /************************************* */
+  const newWorker = new workerModel({
     profession,
+    workImages,
+    status,
+    description,
+    ratePerHour,
+    workerImage,
   });
   newWorker
     .save()
