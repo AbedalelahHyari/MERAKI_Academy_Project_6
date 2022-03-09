@@ -14,6 +14,10 @@ const WorkerPage = () => {
   const [workerImage, setWorkerImage] = useState("");
   const [services, setServices] = useState([]);
   const [workerProfileInfo, setWorkerProfileInfo] = useState({});
+  const obj_id = localStorage.getItem("Info")
+    ? localStorage.getItem("Info")
+    : null;
+  console.log("Info_ID", typeof obj_id);
   /**************************************************************************************************** */
   const getWorkerById = async () => {
     try {
@@ -41,7 +45,7 @@ const WorkerPage = () => {
         workerInfo
       );
       if (res.data.success) {
-        setWorkerProfileInfo(res.data);
+        localStorage.setItem("Info", res.data.workerInfo._id);
         console.log(res.data);
       }
     } catch (err) {
@@ -49,7 +53,6 @@ const WorkerPage = () => {
     }
   };
   /***************************************************************************************** */
-
   const getAllServices = async () => {
     try {
       const res = await axios.get("http://localhost:5000/services/");
@@ -62,11 +65,24 @@ const WorkerPage = () => {
       }
     }
   };
+  /**************************************************************************************************** */
+  const getWorkerInfoById = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/workers/${obj_id}`);
+      if (res.data.success) {
+        console.log(res.data);
+        setWorkerProfileInfo(res.data);
+      }
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
   /***************************************************************************************************** */
   useEffect(() => {
     getWorkerById();
     getAllServices();
-  }, []);
+    getWorkerInfoById();
+  }, [id]);
   /***************************************************************************************************** */
   return (
     <>
