@@ -28,3 +28,31 @@
   font-family: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, Segoe UI,
     Helvetica Neue, Arial, sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+/* .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.SignUp{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home {
+  /* display: flex;
+  flex-direction: column;
+  gap: 40px; */
+  /* align-items: center; */
+ /* margin-top: 30px;
+  margin-bottom: 40px; */
+}
+
+/********************************************/
