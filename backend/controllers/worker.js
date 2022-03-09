@@ -45,7 +45,34 @@ const workerProfile = (req, res) => {
       });
     });
 };
+/**************************************************************************************** */
+const getWorkerInfoById = (req, res) => {
+  let worker_id = req.params._id;
+  workerModel
+    .findById(worker_id)
+    .exec()
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The worker not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The worker with id ===> ${worker_id}`,
+        user: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 
 module.exports = {
   workerProfile,
+  getWorkerInfoById,
 };
