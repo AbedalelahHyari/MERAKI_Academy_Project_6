@@ -50,7 +50,18 @@ const WorkerPage = () => {
   };
   /***************************************************************************************** */
 
- 
+  const getAllServices = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/services/");
+      if (res.data.success) {
+        setServices(res.data.services);
+      } else throw Error;
+    } catch (error) {
+      if (!error.response.data.success) {
+        return console.log(`error`);
+      }
+    }
+  };
   /***************************************************************************************************** */
   useEffect(() => {
     getWorkerById();
