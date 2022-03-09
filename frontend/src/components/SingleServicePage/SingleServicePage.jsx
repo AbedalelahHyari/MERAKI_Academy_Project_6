@@ -22,17 +22,14 @@ const SingleServicePage = () => {
     getOneServiceById();
   }, []);
 
-  console.log(OneServices);
+  console.log("array", OneServices.workers);
   return (
     <>
       <div className="ContainerSingle">
         <div className="AllOneServices">
           {OneServices ? (
             <>
-              <div
-                className="SingleService"
-              
-              >
+              <div className="SingleService">
                 {" "}
                 <h2 className="nameOneSer">{OneServices.name}</h2>
                 <div className="descriptionOneSer">
@@ -45,37 +42,31 @@ const SingleServicePage = () => {
           )}
         </div>
 
-       
         <div className="flexColAllWorker">
-       
-             <h2 className="Header">Workers</h2> 
+          <h2 className="Header">Workers</h2>
 
-
-             <div className="ContainerWorkers">
-          {OneServices.workers ? (
-            OneServices.workers.map((e, i) => {
-              return (
-                <>
-              
-                  <div className="worker_info"   onClick={() => {
-                  navigation(`/worker/${e._id}`);
-                }}>
-                    <img alt="image" className="img_worker" src={e.image} />
-                    <h3 className="workers">{e.name}</h3>
-                  </div>
-                </>
-              );
-            })
-          ) : (
-            <>No Workers</>
-          )}
-
-</div>
-
-
- </div>
-
-      
+          <div className="ContainerWorkers">
+            {OneServices.workers.length ? (
+              OneServices.workers.map((e, i) => {
+                return (
+                  <>
+                    <div
+                      className="worker_info"
+                      onClick={() => {
+                        navigation(`/worker/${e._id}`);
+                      }}
+                    >
+                      <img alt="image" className="img_worker" src={e.image} />
+                      <h3 className="workers">{e.name}</h3>
+                    </div>
+                  </>
+                );
+              })
+            ) : (
+              <h1>No Workers</h1>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
