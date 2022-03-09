@@ -46,7 +46,7 @@ const SingleServicePage = () => {
           <h2 className="Header">Workers</h2>
 
           <div className="ContainerWorkers">
-            {OneServices.workers.length ? (
+            {OneServices.workers?.length ? (
               OneServices.workers.map((e, i) => {
                 return (
                   <>
@@ -63,7 +63,7 @@ const SingleServicePage = () => {
                 );
               })
             ) : (
-              <h1>No Workers</h1>
+              <h3>No Workers available on this service</h3>
             )}
           </div>
         </div>
