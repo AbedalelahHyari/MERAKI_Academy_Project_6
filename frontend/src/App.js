@@ -37,8 +37,11 @@ function App() {
             )}
           </Routes>
         </div>
+        <div className="SignUp">
         {state.isLoggedIn ? <></> : <Registration />}
+        </div>
       </div>
+    
     </>
   );
 }
