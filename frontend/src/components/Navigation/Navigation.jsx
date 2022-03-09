@@ -2,8 +2,10 @@ import { logoutRed } from "../../reducers/login/index";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { AiFillHome } from "react-icons/ai";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout,MdMiscellaneousServices } from "react-icons/md";
+import { FaUserCog } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
+
 import axios from "axios";
 import "../Navigation/Navigation.css";
 const Navigation = () => {
@@ -27,9 +29,9 @@ const Navigation = () => {
   return<>
   <div className="nav">
     <div className="logo_search">
-      {/* <img className="logo" src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1645002900/su1xnqw4k9jxcaxmyuwu.png" onClick={()=>{
+      <img className="logo" src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1646840924/vjkrmjzhzqiuz83o5mms.png" onClick={()=>{
          navigate(`/home`);
-      }}/> */}
+      }}/>
         
   
 
@@ -52,7 +54,7 @@ const Navigation = () => {
           />
         </div>
 
-        {/* <BsSearch className="icon_search" /> */}
+        <BsSearch className="icon_search" />
       </div>
 
       {/* {modal && (
@@ -94,15 +96,11 @@ const Navigation = () => {
       )} */}
     </div>
 
-    {/* <FaFacebookMessenger
-      className="chat"
-      onClick={() => {
-        navigate(`/chat`);
-      }}
-    /> */}
+ 
     <div className="home_nav">
-      <Link to="/home">
-        <AiFillHome className="home_icon" />
+      <Link to="/home" className="link_home"> 
+      <MdMiscellaneousServices className="icon_service"/>
+      <div className="home_icon">Services</div>
       </Link>
     </div>
 
@@ -110,15 +108,8 @@ const Navigation = () => {
       className="user_nav"
    
     >
-      {/* <img
-        className="img_user_nav"
-        src={imgUser !== "undefined" ? imgUser : noAvatar}
-      /> */}
-
-<img
-        className="img_user_nav"
-        src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/271deea8-e28c-41a3-aaf5-2913f5f48be6/de7834s-6515bd40-8b2c-4dc6-a843-5ac1a95a8b55.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI3MWRlZWE4LWUyOGMtNDFhMy1hYWY1LTI5MTNmNWY0OGJlNlwvZGU3ODM0cy02NTE1YmQ0MC04YjJjLTRkYzYtYTg0My01YWMxYTk1YThiNTUuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.BopkDn1ptIwbmcKHdAOlYHyAOOACXW0Zfgbs0-6BY-E"
-      />
+    
+<FaUserCog className="icon_user"/>
       <div className="userName_font_nav">{state.name}</div>
     </div>
     <div className="style_logOut">
