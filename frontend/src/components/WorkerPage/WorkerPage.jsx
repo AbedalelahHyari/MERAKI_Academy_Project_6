@@ -90,6 +90,28 @@ const WorkerPage = () => {
     }
   };
   /***************************************************************************************************** */
+  const createNewRequest = async () => {
+    const request = {
+      worker: id,
+    };
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/request/${id}`,
+        request,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /***************************************************** */
   useEffect(() => {
     getWorkerById();
     getAllServices();
