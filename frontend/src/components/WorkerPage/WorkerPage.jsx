@@ -127,6 +127,7 @@ const WorkerPage = () => {
     getWorkerById();
     getAllServices();
     getWorkerInfoById();
+    getRequestsByWorkerId(); 
   }, [id]);
   /***************************************************************************************************** */
   return (
@@ -203,6 +204,9 @@ const WorkerPage = () => {
 
         <button onClick={addWorkerInfo} className="submitButton">
           Submit
+        </button>
+        <button onClick={createNewRequest} className="hireButton">
+          Hire
         </button>
       </div>
     </>
