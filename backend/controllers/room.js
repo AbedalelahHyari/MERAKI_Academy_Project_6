@@ -28,7 +28,35 @@ const createNewRoom = (req, res) => {
       });
     });
 };
+/******************************/
+/******************************* */
+const getAllRooms = (req, res) => {
+  roomModel
+    .find({})
+    .populate({ path: "room_ID", populate: { path: "worker requester" } })
+    //.populate("worker")
+    .then((rooms) => {
+      if (rooms.length) {
+        res.status(200).json({
+          success: true,
+          message: `All The Rooms`,
+          rooms: rooms,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: `No Rooms Yet`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 module.exports = {
   createNewRoom,
-  
+  getAllRooms,
 };
