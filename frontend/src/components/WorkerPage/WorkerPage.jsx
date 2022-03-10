@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { io } from "socket.io-client";
 import axios from "axios";
 import "../WorkerPage/WorkerPage.css";
+const ENDPOINT = "http://localhost:5000";
+const socket = io.connect(ENDPOINT);
+
 const WorkerPage = () => {
   const { id } = useParams();
   const [worker, setWorker] = useState({});

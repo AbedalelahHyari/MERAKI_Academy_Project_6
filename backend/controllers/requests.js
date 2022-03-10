@@ -67,7 +67,6 @@ const getRequestsByWorkerId = (req, res) => {
     .populate("worker", "name _id")
     .populate("requester", "name _id")
     .then((result) => {
-      console.log(result);
       if (!result.length) {
         return res.status(404).json({
           success: false,
