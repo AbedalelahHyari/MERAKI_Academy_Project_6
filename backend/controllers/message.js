@@ -58,7 +58,38 @@ const getAllMessages = (req, res) => {
     });
 };
 /******************************************************** */
+const getMessagesByRoomId = (req, res) => {
+  const { room_id } = req.body;
+  messageModel
+    .find({ room_id: room_id })
+    .populate({
+      path: "room_id",
+      populate: { path: "room_ID", populate: { path: "worker requester" } },
+    })
+    .exec()
+    .then((messages) => {
+      if (messages.length) {
+        res.status(200).json({
+          success: true,
+          message: `All The messages for the room_id ===> ${room_id}`,
+          messages: messages,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: `No messages in this room ===> ${room_id}`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
 module.exports = {
   createNewMessage,
-  getAllMessages
+  getAllMessages,
+  getMessagesByRoomId
 };
