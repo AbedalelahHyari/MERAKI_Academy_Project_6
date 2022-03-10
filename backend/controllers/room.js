@@ -56,7 +56,37 @@ const getAllRooms = (req, res) => {
       });
     });
 };
+
+/************************************************************************ */
+const getRoomById = (req, res) => {
+  const { room_ID } = req.body;
+  roomModel
+    .findOne({ room_ID })
+    .populate("room_ID", "-__v")
+    .exec()
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The room not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `The room with id ===> ${room_ID}`,
+        room: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+      });
+    });
+};
+
 module.exports = {
   createNewRoom,
   getAllRooms,
+  getRoomById,
 };
