@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "../WorkerPage/WorkerPage.css";
 const WorkerPage = () => {
@@ -18,6 +19,17 @@ const WorkerPage = () => {
     ? localStorage.getItem("Info")
     : null;
   console.log("Info_ID", typeof obj_id);
+  /******************************************** */
+
+  const state = useSelector((state) => {
+    return {
+      token: state.loginReducer.token,
+      isLoggedIn: state.loginReducer.isLoggedIn,
+      user_id: state.loginReducer.user_id,
+      name: state.loginReducer.name,
+    };
+  });
+
   /**************************************************************************************************** */
   const getWorkerById = async () => {
     try {
