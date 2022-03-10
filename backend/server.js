@@ -23,6 +23,11 @@ app.use("/request", requestRouter);
 const workerRouter = require("./routes/worker");
 app.use("/workers", workerRouter);
 
+const roomsRouter = require("./routes/rooms");
+app.use("/rooms", roomsRouter);
+
+const messagesRouter = require("./routes/message");
+app.use("/messages", messagesRouter);
 /****************************************** */
 
 const server = app.listen(PORT, () => {
