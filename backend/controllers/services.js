@@ -1,10 +1,11 @@
 const servicesModel = require("../database/models/service");
 
 const createNewService = (req, res) => {
-  const { name, description } = req.body;
+  const { name, description,img_service } = req.body;
   const newService = new servicesModel({
     name,
     description,
+    img_service,
   });
   newService
     .save()
