@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "../WorkerPage/WorkerPage.css";
 const WorkerPage = () => {
@@ -18,6 +19,17 @@ const WorkerPage = () => {
     ? localStorage.getItem("Info")
     : null;
   console.log("Info_ID", typeof obj_id);
+  /******************************************** */
+
+  const state = useSelector((state) => {
+    return {
+      token: state.loginReducer.token,
+      isLoggedIn: state.loginReducer.isLoggedIn,
+      user_id: state.loginReducer.user_id,
+      name: state.loginReducer.name,
+    };
+  });
+
   /**************************************************************************************************** */
   const getWorkerById = async () => {
     try {
@@ -78,10 +90,44 @@ const WorkerPage = () => {
     }
   };
   /***************************************************************************************************** */
+  const createNewRequest = async () => {
+    const request = {
+      worker: id,
+    };
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/request/${id}`,
+        request,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /************************************************** */
+  const getRequestsByWorkerId = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/request/${id}`);
+      if (res.data.success) {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /***************************************************** */
   useEffect(() => {
     getWorkerById();
     getAllServices();
     getWorkerInfoById();
+    getRequestsByWorkerId(); 
   }, [id]);
   /***************************************************************************************************** */
   return (
@@ -158,6 +204,9 @@ const WorkerPage = () => {
 
         <button onClick={addWorkerInfo} className="submitButton">
           Submit
+        </button>
+        <button onClick={createNewRequest} className="hireButton">
+          Hire
         </button>
       </div>
     </>
