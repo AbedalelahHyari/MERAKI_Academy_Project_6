@@ -8,6 +8,10 @@ import SingleServicePage from "./components/SingleServicePage/SingleServicePage"
 import WorkerPage from "./components/WorkerPage/WorkerPage";
 import Navigation from "./components/Navigation/Navigation";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 function App() {
   const state = useSelector((state) => {
     return {
@@ -16,6 +20,7 @@ function App() {
   });
   return (
     <>
+       <ToastContainer />
      {state.isLoggedIn ? <Navigation /> : <></>}
       <div className="App">
         <div className="Home">
