@@ -3,6 +3,7 @@
   font-family: "Poppins";
 
   background-color: #f0f2f5;
+
   height: 100vh;
   background-size: cover;
   width: 100%;
@@ -39,11 +40,15 @@
   align-items: center;
 } */
 
+.App{
+  background-color: #155eb6;
+}
 .SignUp{
 
   display: flex;
   justify-content: center;
   align-items: center;
+ 
 }
 
 .Home {
