@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { io } from "socket.io-client";
 import axios from "axios";
 import "../WorkerPage/WorkerPage.css";
+const ENDPOINT = "http://localhost:5000";
+const socket = io.connect(ENDPOINT);
+
 const WorkerPage = () => {
   const { id } = useParams();
   const [worker, setWorker] = useState({});
@@ -15,12 +19,18 @@ const WorkerPage = () => {
   const [workerImage, setWorkerImage] = useState("");
   const [services, setServices] = useState([]);
   const [workerProfileInfo, setWorkerProfileInfo] = useState({});
+  /************************************************************************** */
   const obj_id = localStorage.getItem("Info")
     ? localStorage.getItem("Info")
     : null;
-  console.log("Info_ID", typeof obj_id);
-  /******************************************** */
-
+  /************************************************************************ */
+  /*------------------  Socket.io state ---------------------------- */
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [message, setMessage] = useState("");
+  const [room, setRoom] = useState("");
+  const [userName, setUserName] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  /********************************************************************* */
   const state = useSelector((state) => {
     return {
       token: state.loginReducer.token,
@@ -89,6 +99,7 @@ const WorkerPage = () => {
       console.log(err.response);
     }
   };
+  //const  createNewRoom = (req,res)=>{ }
   /***************************************************************************************************** */
   const createNewRequest = async () => {
     const request = {
@@ -106,6 +117,7 @@ const WorkerPage = () => {
       );
       if (res.data.success) {
         console.log(res.data);
+        //createRoom()
       }
     } catch (err) {
       console.log(err);
@@ -122,12 +134,34 @@ const WorkerPage = () => {
       console.log(err);
     }
   };
+  /******************************************************************** */
+  const joinRoom = () => {
+    setLoggedIn(true);
+    socket.emit("JOIN_ROOM", room);
+  };
+
+  const sendMessage = () => {
+    const messageContent = {
+      room,
+      content: {
+        sender: userName,
+        message: message,
+      },
+    };
+    socket.emit("SEND_MESSAGE", messageContent);
+    setMessageList([...messageList, messageContent.content]);
+    setMessage("");
+  };
+
   /***************************************************** */
   useEffect(() => {
     getWorkerById();
     getAllServices();
     getWorkerInfoById();
-    getRequestsByWorkerId(); 
+    getRequestsByWorkerId();
+    socket.on("RECEIVE_MESSAGE", (data) => {
+      setMessageList([...messageList, data]);
+    });
   }, [id]);
   /***************************************************************************************************** */
   return (
@@ -208,6 +242,56 @@ const WorkerPage = () => {
         <button onClick={createNewRequest} className="hireButton">
           Hire
         </button>
+      </div>
+      <div className="Chat">
+        {loggedIn ? (
+          <div>
+            <ul>
+              {messageList.map((element, index) => {
+                console.log(element);
+                return (
+                  <li key={index}>
+                    <p>
+                      {element.sender}: {element.message}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+            <input
+              style={{ width: "450px" }}
+              type={"text"}
+              placeholder="Message ..."
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+            />
+            <button
+              onClick={sendMessage}
+              style={{ backgroundColor: "#79b893" }}
+            >
+              send
+            </button>
+          </div>
+        ) : (
+          <div>
+            <input
+              type={"text"}
+              placeholder="username"
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
+            <input
+              type={"text"}
+              placeholder="Room ID"
+              onChange={(e) => {
+                setRoom(e.target.value);
+              }}
+            />
+            <button onClick={joinRoom}>Enter Room</button>
+          </div>
+        )}
       </div>
     </>
   );
