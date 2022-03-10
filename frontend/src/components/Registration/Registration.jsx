@@ -3,10 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import "./Registration.css";
 import axios from "axios";
+import { BsFillXCircleFill } from "react-icons/bs";
 import { loginRed } from "../../reducers/login/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 /****************************************** */
 const Registration = () => {
   const navigation = useNavigate();
+
+  const [signuPMessage, setSignupMessage] = useState("");
+  const [modalLogin, setModalLogin] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +34,11 @@ const Registration = () => {
   console.log(state.isLoggedIn);
   /*************************************** */
 
+  const toggleModal = () => {
+    setModalLogin(!modalLogin);
+  };
+
+  /****************************************** */
   const register = async () => {
     try {
       const user = {
@@ -42,9 +54,29 @@ const Registration = () => {
       const res = await axios.post("http://localhost:5000/users", user);
       if (res.data.success) {
         console.log(`Success to add a user`);
+        toast.success(" The user has been created successfully", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        toggleModal();
       }
     } catch (err) {
       console.log(err);
+      console.log("teza");
+      toast.error(" Error happened while register, please try again", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   /************************************************************************ */
@@ -75,108 +107,201 @@ const Registration = () => {
       } else throw Error;
     } catch (error) {
       if (error.response && error.response.data) {
-        console.log(error);
+        toast.error(error.response.data.message, {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
+
+      toast.error("Error happened while Login, please try again", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
-  /*************************************************************** */
+  /**************************Register************************************* */
   return (
     <>
-      <div className="RegisterForm">
-        <input
-          className="name"
-          type="text"
-          placeholder="Name"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <input
-          className="email"
-          type="text"
-          placeholder="Email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <input
-          className="password"
-          type="text"
-          placeholder="Password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <input
-          className="age"
-          type="number"
-          placeholder="Age"
-          onChange={(e) => {
-            setAge(e.target.value);
-          }}
-        />
-        <select
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-          className="gender"
-        >
-          <option>Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+      <div className="container_for_all">
+        <div className="container_login">
+          <div className="flex_qout">
+            <img
+              className="logo_slogan"
+              src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1646840924/vjkrmjzhzqiuz83o5mms.png"
+            />
+            <div className="slogan">Fix Services</div>
+            <div className="qout"> Fix its a service App</div>
+          </div>
+          <div className="Login">
+            <div className="all_input_login">
+              <div>
+                {" "}
+                <input
+                  className="input_login"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <input
+                  className="input_login"
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && login();
+                  }}
+                />
+              </div>
 
-        <input
-          className="location"
-          type="text"
-          placeholder="Location"
-          onChange={(e) => {
-            setLocation(e.target.value);
-          }}
-        />
-        <input
-          className="phone"
-          type="text"
-          placeholder="Phone"
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-        <select
-          onChange={(e) => {
-            setRole(e.target.value);
-          }}
-          className="role"
-        >
-          <option>Role</option>
-          <option value="user">User</option>
-          <option value="worker">Worker</option>
-        </select>
-        <button onClick={register} className="registerButton">
-          Register
-        </button>
-      </div>
-      {/**************************************************************************** */}
-      <div className="loginForm">
-        <input
-          className="email"
-          type="text"
-          placeholder="Email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <input
-          className="password"
-          type="password"
-          placeholder="Password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <button onClick={login} className="loginButton">
-          Login
-        </button>
+              <button className="button_login" onClick={login}>
+                Login
+              </button>
+            </div>
+
+            <div className="sperate_style">
+              <div className="line_login"></div>
+              <button className="craete_new_account" onClick={toggleModal}>
+                Craete new account
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {modalLogin && (
+          <div className="modal">
+            <div onClick={toggleModal} className="overlay"></div>
+            <div className="modal-content">
+              <div className="register">
+                <div className="register-content">
+                  <div className="title_close">
+                    <div className="titRegis">Sign Up</div>
+                    <BsFillXCircleFill
+                      className="icon_close"
+                      onClick={toggleModal}
+                    />
+                  </div>
+                  <div className="gap_inpt_signup">
+                    <div className="line_signup"></div>
+
+                    <div>
+                      <input
+                        className="input_signup"
+                        type="text"
+                        placeholder="Name"
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        className="input_signup"
+                        type="text"
+                        placeholder="Email"
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        className="input_signup"
+                        type="Password"
+                        placeholder="Password"
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="border_bottom">
+                      <input
+                        className="input_signup"
+                        type="number"
+                        placeholder="Age"
+                        onChange={(e) => {
+                          setAge(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="border_bottom">
+                      <select
+                        onChange={(e) => {
+                          setGender(e.target.value);
+                        }}
+                        className="input_signup"
+                      >
+                        <option>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+
+                    <div className="border_bottom">
+                      <input
+                        className="input_signup"
+                        type="text"
+                        placeholder="Location"
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="border_bottom">
+                      <input
+                        className="input_signup"
+                        type="text"
+                        placeholder="Phone"
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="border_bottom">
+                      <select
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
+                        className="input_signup"
+                      >
+                        <option>Role</option>
+                        <option value="user">User</option>
+                        <option value="worker">Worker</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button className="buttonRegs" onClick={register}>
+                    sing up
+                  </button>
+
+                  <div className="sing_up_message">{signuPMessage}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
