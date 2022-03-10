@@ -89,6 +89,7 @@ const WorkerPage = () => {
       console.log(err.response);
     }
   };
+  //const  createNewRoom = (req,res)=>{ }
   /***************************************************************************************************** */
   const createNewRequest = async () => {
     const request = {
@@ -106,6 +107,7 @@ const WorkerPage = () => {
       );
       if (res.data.success) {
         console.log(res.data);
+        //createRoom()
       }
     } catch (err) {
       console.log(err);
@@ -127,7 +129,7 @@ const WorkerPage = () => {
     getWorkerById();
     getAllServices();
     getWorkerInfoById();
-    getRequestsByWorkerId(); 
+    getRequestsByWorkerId();
   }, [id]);
   /***************************************************************************************************** */
   return (

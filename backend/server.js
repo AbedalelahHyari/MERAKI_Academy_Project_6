@@ -3,9 +3,9 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const db = require("./database/db");
-
+const socket = require("socket.io");
 app.use(cors());
-
+const PORT = 5000;
 app.use(express.json());
 
 /**************** Routers ******************* */
@@ -25,8 +25,28 @@ app.use("/workers", workerRouter);
 
 /****************************************** */
 
-const PORT = 5000;
-
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`SERVER WORKING ON PORT: ${PORT}`);
+});
+/******************************************** */
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    method: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`${socket.id} is connected`);
+  socket.on("JOIN_ROOM", (data) => {
+    socket.join(data);
+  });
+
+  socket.on("SEND_MESSAGE", (data) => {
+    socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("\nuser left ...");
+  });
 });
