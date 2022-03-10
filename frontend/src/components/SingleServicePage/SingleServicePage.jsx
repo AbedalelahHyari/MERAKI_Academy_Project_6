@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../SingleServicePage/SingleServicePage.css";
+import { MdHardware } from "react-icons/md";
 const SingleServicePage = () => {
   const { id } = useParams();
   const navigation = useNavigate();
@@ -30,11 +31,21 @@ const SingleServicePage = () => {
           {OneServices ? (
             <>
               <div className="SingleService">
-                {" "}
-                <h2 className="nameOneSer">{OneServices.name}</h2>
-                <div className="descriptionOneSer">
-                  {OneServices.description}
-                </div>{" "}
+                <img
+                  src={OneServices.img_service}
+                  alt="photo"
+                  className="img-single-service"
+                />
+
+                <div className="container-name-description">
+                  <span className="nameOneSer">
+                    {" "}
+                    {OneServices.name} <span className="border"></span>
+                  </span>
+                  <div className="descriptionOneSer">
+                    {OneServices.description}
+                  </div>
+                </div>
               </div>
             </>
           ) : (
@@ -43,7 +54,7 @@ const SingleServicePage = () => {
         </div>
 
         <div className="flexColAllWorker">
-          <h2 className="Header">Workers</h2>
+          <span className="Header">Workers <MdHardware className="icon_worker" style={{color:"white"}}/></span>
 
           <div className="ContainerWorkers">
             {OneServices.workers?.length ? (
@@ -57,7 +68,9 @@ const SingleServicePage = () => {
                       }}
                     >
                       <img alt="image" className="img_worker" src={e.image} />
-                      <h3 className="workers">{e.name}</h3>
+                      <span className="worker-name">{e.name}</span>
+
+                      <button className="connect-button">Connect</button>
                     </div>
                   </>
                 );
