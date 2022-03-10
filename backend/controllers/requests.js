@@ -64,6 +64,8 @@ const getRequestsByWorkerId = (req, res) => {
   const worker_id = req.params.id;
   requestsModel
     .find({ worker: worker_id })
+    .populate("worker", "name _id")
+    .populate("requester", "name _id")
     .then((result) => {
       console.log(result);
       if (!result.length) {
