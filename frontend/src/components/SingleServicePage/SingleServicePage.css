@@ -1,7 +1,6 @@
 .ContainerSingle {
   display: flex;
   flex-direction: column;
- 
 }
 
 .AllOneServices {
@@ -11,48 +10,83 @@
 }
 
 .SingleService {
-  flex-direction: column;
   display: flex;
-  width: 700px;
-  height: 100%;
+  height: 320px;
 
-  border: 0.5px solid blue;
-border-radius: 15px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  border-radius: 7px;
   font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
     "Helvetica Neue", Arial, sans-serif;
   text-align: start;
-  margin:20px ;
+  margin: 40px 0 0 80px;
+}
+
+.container-name-description {
+  flex-direction: column;
+  display: flex;
+  width: 700px;
+  gap: 10px;
+
+  border-radius: 15px;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  text-align: start;
+  margin: 20px;
   padding: 10px;
 }
 
-.descriptionOneSer{
-    margin-left: 20px;
-  
+.img-single-service {
+  width: 350px;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
 }
 
-.nameOneSer{
-    margin-left: 20px;
- 
+.descriptionOneSer {
+  margin-left: 20px;
+  font-size: 19px;
+  text-align: start;
+  font-weight: 450;
 }
 
-.flexColAllWorker{
+.nameOneSer {
+  margin-left: 20px;
+  font-size: 26px;
+  text-align: start;
+  font-weight: 600;
 
-    display: flex;
-    flex-direction: column;
-    border: 0.5px solid orange;
-    margin: 20px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.Header{
-    display: flex;
-    justify-content: flex-start;
-    padding: 10px;
-    margin: 20px;
-    border-bottom: 0.5px solid rgb(160, 160, 160);
-
-    
+.border {
+  border-bottom: 0.5px solid rgb(160, 160, 160);
 }
+.flexColAllWorker {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 40px 0 40px;
+
+}
+
+.Header {
+  display: flex;
+  margin: 10px 0 0 40px;
+  gap: 5px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: brown;
+  border-radius: 5px;
+  color: #ffffff;
+  height: 35px;
+  align-items: center;
+  padding-left: 17px;
+}
+
 .ContainerWorkers {
   display: flex;
   gap: 25px;
@@ -64,23 +98,55 @@ border-radius: 15px;
 
 .worker_info {
   display: flex;
-  gap: 7px;
-
-  height: 50px;
-  width: 100px;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 7px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  width: 300px;
   align-items: center;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  height: 190px;
+  padding-top: 15px;
 }
-.worker_info:hover{
-        background-color: aliceblue;
-        border-radius: 10px;
-        cursor: pointer;
-    }
+.worker_info:hover {
+  background-color: aliceblue;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
 .img_worker {
-  width: 30px;
-  height: 30px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   object-fit: cover;
 
   box-shadow: 0 0 3px rgb(145, 144, 144);
+}
+.worker-name {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.connect-button {
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  width: 140px;
+  height: 32px;
+  color: white;
+  border: none;
+  font-size: 17px;
+  border-radius: 7px;
+  background-color: brown;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.connect-button:hover {
+  background-color: rgb(128, 14, 14);
+}
+.icon_worker {
+  font-size: 25px;
 }
