@@ -10,8 +10,6 @@ const Home = () => {
     try {
       const res = await axios.get("http://localhost:5000/services/");
       if (res.data.success) {
-        // dispatch(setPosts(res.data.results.reverse()));
-
         setServices(res.data.services);
       } else throw Error;
     } catch (error) {
@@ -34,9 +32,12 @@ const Home = () => {
             services.map((e, i) => {
               return (
                 <>
-                  <div className="oneService" onClick={()=>{
-                 navigation(`/services/${e._id}`);
-                  }}>
+                  <div
+                    className="oneService"
+                    onClick={() => {
+                      navigation(`/services/${e._id}`);
+                    }}
+                  >
                     {" "}
                     <h2 className="nameSer">{e.name}</h2>
                     {/* <div className="descriptionSer">{e.description}</div>{" "} */}
