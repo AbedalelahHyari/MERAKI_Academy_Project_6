@@ -111,6 +111,17 @@ const WorkerPage = () => {
       console.log(err);
     }
   };
+  /************************************************** */
+  const getRequestsByWorkerId = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/request/${id}`);
+      if (res.data.success) {
+        console.log(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /***************************************************** */
   useEffect(() => {
     getWorkerById();
