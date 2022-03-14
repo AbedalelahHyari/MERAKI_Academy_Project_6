@@ -18,12 +18,6 @@ const creatNewRequest = (req, res) => {
       });
     })
     .catch((err) => {
-      if (err.keyPattern) {
-        return res.status(409).json({
-          success: false,
-          message: `The email request exists`,
-        });
-      }
       res.status(500).json({
         success: false,
         message: `Server Error`,
