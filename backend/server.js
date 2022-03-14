@@ -40,17 +40,19 @@ const io = socket(server, {
     method: ["GET", "POST"],
   },
 });
-
+/***************************************** */
 io.on("connection", (socket) => {
   console.log(`${socket.id} is connected`);
   socket.on("JOIN_ROOM", (data) => {
+    console.log("Room_ID", data);
     socket.join(data);
   });
-
+  ////////////////////////////////
   socket.on("SEND_MESSAGE", (data) => {
+    console.log("message_send", data);
     socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
   });
-
+  //////////////////////////
   socket.on("disconnect", () => {
     console.log("\nuser left ...");
   });

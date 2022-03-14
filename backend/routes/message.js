@@ -9,6 +9,6 @@ const messagesRouter = express.Router();
 /******************************************************************************** */
 messagesRouter.post("/", authentication, createNewMessage);
 messagesRouter.get("/", getAllMessages);
-messagesRouter.get("/room", getMessagesByRoomId);
+messagesRouter.get("/room/:id", getMessagesByRoomId);
 
 module.exports = messagesRouter;

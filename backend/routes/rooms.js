@@ -8,6 +8,6 @@ const roomsRouter = express.Router();
 /******************************************************************************** */
 roomsRouter.post("/", createNewRoom);
 roomsRouter.get("/", getAllRooms);
-roomsRouter.get("/single", getRoomById);
+roomsRouter.get("/single/:id", getRoomById);
 
 module.exports = roomsRouter;
