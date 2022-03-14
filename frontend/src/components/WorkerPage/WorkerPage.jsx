@@ -161,6 +161,7 @@ const WorkerPage = () => {
       console.log(err);
     }
   };
+  /**************************************************************************************************************** */
   const createNewRoom = async () => {
     try {
       const res = await axios.post(`http://localhost:5000/rooms`, {
@@ -207,7 +208,7 @@ const WorkerPage = () => {
     setLoggedIn(true);
     socket.emit("JOIN_ROOM", room_id_Ref);
   };
-
+/*************************************************************************** */
   const sendMessage = () => {
     const messageContent = {
       room_id_Ref,
@@ -220,7 +221,23 @@ const WorkerPage = () => {
     setMessageList([...messageList, messageContent.content]);
     setMessage("");
   };
-
+/********************************************************* */
+const getAllMessagesByRoomId = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/messages/room/${
+            room_id_Ref ? room_id_Ref : localStorage.getItem("room_id_worker")
+          }`
+        );
+        if (res.data.success) {
+          setMessageList(res.data.messages);
+          console.log(res.data.messages[0].message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    /************************************************************** */
   /***************************************************** */
   useEffect(() => {
     getWorkerById();
@@ -240,7 +257,7 @@ const WorkerPage = () => {
   }, [messageList]);
 
   /***************************************************************************************************** */
-  console.log("worker-bashar", workerProfileInfo.user);
+
   return (
     <>
       <div className="Container-Profile-Worker">
