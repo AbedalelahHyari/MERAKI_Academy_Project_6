@@ -1,7 +1,8 @@
 .nav {
-  background-color: #ffffff;
+  background-color: #222;
+  border-color: #080808;
   width: 100%;
-  height: 52px;
+  height: 70px;
   box-shadow: 1px 2px 5px #dddfe2;
   display: flex;
   flex-wrap: wrap;
@@ -9,13 +10,14 @@
   align-items: center;
   position: fixed;
   z-index: 3;
+  color: #ffffff;
 
 }
 
 @media only screen and (max-width: 380px) {
   .nav {
  height:100px;
-    /* width: 50px; */
+ 
      
   
   }
@@ -54,8 +56,8 @@ body {
   gap: 30px;
 }
 .logo {
-  height:40px;
-  width: 160px;
+  height:50px;
+  width: 180px;
  
   object-fit: contain;
   cursor: pointer;
@@ -91,7 +93,7 @@ body {
 }
 
 .icon_search {
-  color: #527cc5;
+  color: #ffffff;
   font-size: 20px;
 }
 
@@ -154,7 +156,7 @@ body {
 }
 .home_icon {
   font-size: 21px;
-  color: #2388d9;
+  color: #ffffff;
   cursor: pointer;
   font-family: "Mallanna", sans-serif;
 }
@@ -166,14 +168,14 @@ body {
 .LogOut {
   border: none;
 
-  color: #ffffff;
+  color: #2388d9;
   border-radius: 5px;
   cursor: pointer;
   width: 35px;
   height: 25px;
 
 
-  background-color: #2388d9;
+  background-color: #ffffff;
   font-weight: bold;
 }
 
@@ -183,10 +185,10 @@ body {
 
 .icon_user{
   font-size: 28px;
-  color: #2388d9;
+  color: #ffffff;
 }
 
 .icon_service{
   font-size: 28px;
-  color: #2388d9;
+  color: #ffffff;
 }

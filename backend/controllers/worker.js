@@ -18,6 +18,7 @@ const workerProfile = (req, res) => {
     description,
     ratePerHour,
     workerImage,
+    worker:req.token.userId,
   });
   newWorker
     .save()
@@ -49,7 +50,7 @@ const workerProfile = (req, res) => {
 const getWorkerInfoById = (req, res) => {
   let worker_id = req.params._id;
   workerModel
-    .findById(worker_id)
+    .findOne({worker:req.params._id}).populate("worker","name email _id").populate("profession")
     .exec()
     .then((result) => {
       if (!result) {
