@@ -9,6 +9,7 @@ const workerProfileSchema = new mongoose.Schema({
   workerImage: {
     type: String,
   },
+  worker:{ type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Worker", workerProfileSchema);
