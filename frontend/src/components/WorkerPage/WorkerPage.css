@@ -1,30 +1,163 @@
+/*------------------------------------------------- Modal -Worker-Css-------------------------------------------------------------------------*/
+.modal-worker,
+.overlay-worker {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay-worker {
+  background: rgba(182, 182, 187, 0.7);
+}
+.modal-content-worker {
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  border-radius: 3px;
+
+}
+/* 
+
+/*****************Worker-Page*************************/
 .Container-Profile-Worker {
   padding-top: 50px;
+  margin-left: 60px;
   display: flex;
-  margin-left: 25px;
+  flex-direction: column;
+  /* gap: 60px; */
+  align-items: flex-start;
+  margin-bottom: 30px;
 }
 
 .All-Info-Worker {
   margin-top: 30px;
-}
-.Chat {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap:40px;
+  background-color: #ffffff;
+  padding: 15px;
+  border: 0.5px solid brown;
+}
+.icon-pen-edit{
+  font-size: 28px;
+  color: brown;
+  cursor: pointer;
+}
+.icon-pen-edit:hover{
+  color: rgb(196, 63, 2);
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 500px;
-  border: solid 1px gray;
+.Button-hiring{
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  width: 140px;
+  height: 32px;
+  color: white;
+  border: none;
+  font-size: 17px;
+  border-radius: 7px;
+  background-color: brown;
+  transition: all 0.4s;
+  cursor: pointer;
 }
-li {
-  padding: 0.1rem;
+
+.Button-hiring:hover{
+  background-color: rgb(22, 165, 153);
 }
-li:nth-child(odd) {
-  background: #79b893;
-  text-align: right;
+
+.info-worker-column{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  align-items: flex-start;
+}
+.span-title{
+  font-size: 19px;
+  font-weight:600 ;
+
+}
+
+.img-worker{
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 0.5px solid gray;
+}
+
+.worker-projects{
+
+  width: 700px;
+  height: 270px;
+  border: 0.5px solid brown;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+  margin-top: 10px;
+
+}
+
+.img-projects{
+  width: 550px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.icon-arrow{
+  font-size: 50px;
+  color: brown;
+}
+
+.icon-arrow:hover{
+  color: rgb(124, 19, 19);
+}
+
+.span-title-skills{
+  text-align: start;
+  width: 650px;
+  display: flex;
+  gap: 8px;
+ 
+}
+.span-title-inside{
+  color: black;
+  font-size: 19px;
+  font-weight:600 ;
+
+}
+
+.workshops-title{
+  font-size: 18px;
+  font-weight: 400;
+  display: flex;
+  width:700px;
+  border-radius: 5px;
+  background-color: brown;
+  /* height: 40px; */
+  color: #ffffff;
+  align-items: center;
+  padding-left: 17px;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+/**********Inside Modal ***************/
+
+.workerProfileForm{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  background-color: #ffffff;
+  width: 480px;
+  height: 560px;
 }
