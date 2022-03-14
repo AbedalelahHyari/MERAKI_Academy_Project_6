@@ -238,20 +238,7 @@ const getAllMessagesByRoomId = async () => {
       }
     };
     /************************************************************** */
-    const getRoomById = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:5000/rooms/single/${element._id}`
-      );
-      if (res.data.success) {
-        //localStorage.setItem("room_id_worker", res.data.message);
-        console.log(res.data.message);
-      }
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-  /***************************************************** */
+
   useEffect(() => {
     getWorkerById();
     getAllServices();
