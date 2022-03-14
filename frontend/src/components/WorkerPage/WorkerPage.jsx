@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import axios from "axios";
 import "../WorkerPage/WorkerPage.css";
+import { BsPencilSquare,BsFillArrowLeftSquareFill,BsFillArrowRightSquareFill } from "react-icons/bs";
 const ENDPOINT = "http://localhost:5000";
 const socket = io.connect(ENDPOINT);
 
@@ -30,6 +31,7 @@ const WorkerPage = () => {
   const [room, setRoom] = useState("");
   const [userName, setUserName] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const [modalWorker, setModalWorker] = useState(false);
   /********************************************************************* */
   const state = useSelector((state) => {
     return {
@@ -41,6 +43,11 @@ const WorkerPage = () => {
   });
 
   /**************************************************************************************************** */
+
+  const toggleModalWorker = () => {
+    setModalWorker(!modalWorker);
+  };
+  /******************************************************** */
   const getWorkerById = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/users/${id}`);
@@ -60,11 +67,17 @@ const WorkerPage = () => {
       description,
       ratePerHour,
       workerImage,
+
     };
     try {
       const res = await axios.post(
         `http://localhost:5000/workers/${id}`,
-        workerInfo
+        workerInfo,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
       );
       if (res.data.success) {
         localStorage.setItem("Info", res.data.workerInfo._id);
@@ -90,7 +103,7 @@ const WorkerPage = () => {
   /**************************************************************************************************** */
   const getWorkerInfoById = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/workers/${obj_id}`);
+      const res = await axios.get(`http://localhost:5000/workers/${id}`);
       if (res.data.success) {
         console.log(res.data);
         setWorkerProfileInfo(res.data);
@@ -99,7 +112,7 @@ const WorkerPage = () => {
       console.log(err.response);
     }
   };
-  //const  createNewRoom = (req,res)=>{ }
+
   /***************************************************************************************************** */
   const createNewRequest = async () => {
     const request = {
@@ -117,7 +130,6 @@ const WorkerPage = () => {
       );
       if (res.data.success) {
         console.log(res.data);
-        //createRoom()
       }
     } catch (err) {
       console.log(err);
@@ -164,135 +176,157 @@ const WorkerPage = () => {
     });
   }, [id]);
   /***************************************************************************************************** */
+  console.log("worker-bashar", workerProfileInfo.user);
   return (
     <>
       <div className="Container-Profile-Worker">
+    
         <div className="All-Info-Worker">
-          <h4>{worker.name}</h4>
-          <img src={worker.image} />
-          <div>{worker.location}</div>
+      
+          <img src={worker.image} className="img-worker"/>
+
+          <div className="info-worker-column">
+            {workerProfileInfo.user ? (
+              <>
+                <span>
+                  <span className="span-title">Name: </span>
+                  {worker.name}
+                </span>
+                <span>
+                  <span className="span-title">Profession: </span>
+                  {workerProfileInfo.user.profession.name}
+                </span>
+                <span>
+                  <span className="span-title">Phone: </span>
+                  {worker.phone}
+                </span>
+                <span>
+              <span className="span-title">Email: </span>
+              {worker.email}
+            </span>
+                <span>
+                  <span className="span-title">Rate/h: </span>
+                  {workerProfileInfo.user.ratePerHour}$
+                </span>
+
+                <span className="span-title-skills">
+                  <span className="span-title-inside">Skills: </span>
+                  {workerProfileInfo.user.description}
+                </span>
+
+                <span>
+                  <span className="span-title">Status: </span>
+                  {workerProfileInfo.user.status}
+                </span>
+              </>
+            ) : (
+             "NO INFO"
+            )}
+          </div>
+
+          <button className="Button-hiring" onClick={createNewRequest}>Hiring</button>
+          <BsPencilSquare className="icon-pen-edit" onClick={toggleModalWorker} />
         </div>
+
+        <span className="workshops-title">workshops</span>
+        <div className="worker-projects">
+
+<BsFillArrowLeftSquareFill className="icon-arrow"/>
+          <img src="https://decor30.com/wp-content/uploads/2018/03/%D8%A7%D9%84%D9%88%D8%A7%D9%86-%D8%AD%D9%88%D8%A7%D8%A6%D8%B7-%D8%BA%D8%B1%D9%81-%D8%A7%D9%84%D9%86%D9%88%D9%85-2018-800x445.jpg" className="img-projects"/>
+
+          <BsFillArrowRightSquareFill className="icon-arrow"/>
+
+          </div>
+
       </div>
       {/************************************************************************************************* */}
-      <div className="workerProfileForm">
-        <select
-          onChange={(e) => {
-            setProfession(e.target.value);
-          }}
-          className="profession"
-        >
-          <option>Profession</option>
-          {services.length ? (
-            services.map((e, i) => {
-              return (
-                <>
-                  <option value={e._id}>{e.name}</option>
-                </>
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </select>
 
-        <input
-          className="workImages"
-          type="text"
-          placeholder="WorkImages"
-          onChange={(e) => {
-            setWorkImages(e.target.value);
-          }}
-        />
-        <input
-          className="status"
-          type="text"
-          placeholder="Status"
-          onChange={(e) => {
-            setStatus(e.target.value);
-          }}
-        />
-        <input
-          className="description"
-          type="text"
-          placeholder="Description"
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
-        />
-        <input
-          className="ratePerHour"
-          type="number"
-          placeholder="Rate Per Hour"
-          onChange={(e) => {
-            setRatePerHour(e.target.value);
-          }}
-        />
-        <input
-          className="workerImage"
-          type="text"
-          placeholder="worker Image"
-          onChange={(e) => {
-            setWorkerImage(e.target.value);
-          }}
-        />
+   
+      {modalWorker && (
+        <div className="modal-worker">
+          <div onClick={toggleModalWorker} className="overlay-worker"></div>
+          <div className="modal-content-worker">
 
-        <button onClick={addWorkerInfo} className="submitButton">
-          Submit
-        </button>
-        <button onClick={createNewRequest} className="hireButton">
-          Hire
-        </button>
-      </div>
-      <div className="Chat">
-        {loggedIn ? (
-          <div>
-            <ul>
-              {messageList.map((element, index) => {
-                console.log(element);
-                return (
-                  <li key={index}>
-                    <p>
-                      {element.sender}: {element.message}
-                    </p>
-                  </li>
-                );
-              })}
-            </ul>
-            <input
-              style={{ width: "450px" }}
-              type={"text"}
-              placeholder="Message ..."
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-            />
-            <button
-              onClick={sendMessage}
-              style={{ backgroundColor: "#79b893" }}
-            >
-              send
-            </button>
+
+
+
+            <div className="workerProfileForm">
+
+            <div className="border_bottom-worker">
+              <select
+                onChange={(e) => {
+                  setProfession(e.target.value);
+                }}
+                className="profession"
+              >
+                <option>Profession</option>
+                {services.length ? (
+                  services.map((e, i) => {
+                    return (
+                      <>
+                        <option value={e._id}>{e.name}</option>
+                      </>
+                    );
+                  })
+                ) : (
+                  <></>
+                )}
+              </select>
+</div>
+
+              <input
+                className="workImages"
+                type="text"
+                placeholder="WorkImages"
+                onChange={(e) => {
+                  setWorkImages(e.target.value);
+                }}
+              />
+              <input
+                className="status"
+                type="text"
+                placeholder="Status"
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
+              />
+              <input
+                className="description"
+                type="text"
+                placeholder="Description"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+              <input
+                className="ratePerHour"
+                type="number"
+                placeholder="Rate Per Hour"
+                onChange={(e) => {
+                  setRatePerHour(e.target.value);
+                }}
+              />
+              <input
+                className="workerImage"
+                type="text"
+                placeholder="worker Image"
+                onChange={(e) => {
+                  setWorkerImage(e.target.value);
+                }}
+              />
+
+              <button onClick={addWorkerInfo} className="submitButton">
+                Submit
+              </button>
+      
+            </div>
+
+
+
+
           </div>
-        ) : (
-          <div>
-            <input
-              type={"text"}
-              placeholder="username"
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-            <input
-              type={"text"}
-              placeholder="Room ID"
-              onChange={(e) => {
-                setRoom(e.target.value);
-              }}
-            />
-            <button onClick={joinRoom}>Enter Room</button>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
