@@ -1,9 +1,9 @@
 # MERAKI_Academy_Project_6
 
-<p align="center">
+<!-- <p align="center">
   <a href="" rel="noopener">
- <!-- <img width=200px height=200px src="" alt="Project logo"></a> -->
-</p>
+  <img width=200px height=200px src="" alt="Project logo"></a>
+</p>  !-->
 
 <h3 align="center">FIX</h3>
 
