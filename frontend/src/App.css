@@ -34,15 +34,7 @@
   box-sizing: border-box;
 }
 
-/* .App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
-.App{
-  /* background-color: #155eb6; */
-}
 .SignUp{
 
   display: flex;
@@ -51,13 +43,5 @@
  
 }
 
-.Home {
-  /* display: flex;
-  flex-direction: column;
-  gap: 40px; */
-  /* align-items: center; */
- /* margin-top: 30px;
-  margin-bottom: 40px; */
-}
 
 /********************************************/

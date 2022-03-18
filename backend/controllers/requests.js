@@ -30,7 +30,7 @@ const getAllRequests = (req, res) => {
   requestsModel
     .find({})
     .populate("worker", "name role _id")
-    .populate("requester", "name role _id")
+    .populate("requester", "name role _id location phone image")
     .then((result) => {
       if (result.length) {
         res.status(200).json({
@@ -59,7 +59,7 @@ const getRequestsByWorkerId = (req, res) => {
   requestsModel
     .find({ worker: worker_id })
     .populate("worker", "name _id")
-    .populate("requester", "name _id")
+    .populate("requester", "name _id location phone image")
     .then((result) => {
       if (!result.length) {
         return res.status(404).json({

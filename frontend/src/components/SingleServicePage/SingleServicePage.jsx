@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../SingleServicePage/SingleServicePage.css";
-import { MdHardware } from "react-icons/md";
+import { MdHardware,MdOutlineWork } from "react-icons/md";
 const SingleServicePage = () => {
   const { id } = useParams();
   const navigation = useNavigate();
@@ -26,8 +26,14 @@ const SingleServicePage = () => {
   console.log("array", OneServices.workers);
   return (
     <>
+
+
       <div className="ContainerSingle">
+
         <div className="AllOneServices">
+      
+      <span className="description-title">profession <MdOutlineWork className="icon_worker" style={{color:"white"}}/></span>
+     
           {OneServices ? (
             <>
               <div className="SingleService">
@@ -53,10 +59,13 @@ const SingleServicePage = () => {
           )}
         </div>
 
-        <div className="flexColAllWorker">
-          <span className="Header">Workers <MdHardware className="icon_worker" style={{color:"white"}}/></span>
 
-          <div className="ContainerWorkers">
+        <div className="flexColAllWorker">
+        
+        <span className="Header">Workers <MdHardware className="icon_worker" style={{color:"white"}}/></span>
+        
+        
+         <div className="workers-flex-row">
             {OneServices.workers?.length ? (
               OneServices.workers.map((e, i) => {
                 return (
@@ -72,14 +81,20 @@ const SingleServicePage = () => {
 
                       <button className="connect-button">Connect</button>
                     </div>
+
+
+                  
                   </>
                 );
               })
             ) : (
               <h3>No Workers available on this service</h3>
             )}
-          </div>
+        
         </div>
+        </div>
+
+
       </div>
     </>
   );

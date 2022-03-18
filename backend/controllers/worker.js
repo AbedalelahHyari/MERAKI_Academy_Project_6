@@ -72,8 +72,36 @@ const getWorkerInfoById = (req, res) => {
       });
     });
 };
+/******************************************* */
+const updateImage = (req, res) => {
+  let worker_profile = req.params.id;
+
+  workerModel
+    .findOneAndUpdate({worker:worker_profile}, req.body, { new: true })
+    .then((result) => {
+      if (result == null) {
+        return res.status(404).json({
+          success: false,
+          massage: `The user ==> ${userId} Not Found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        massage: `Success Image updated`,
+        vid: result,
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        success: false,
+        massage: `The Image for ==> ${userId} Not Found`,
+        err,
+      });
+    });
+};
 
 module.exports = {
   workerProfile,
   getWorkerInfoById,
+  updateImage
 };

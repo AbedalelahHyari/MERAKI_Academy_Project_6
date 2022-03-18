@@ -39,12 +39,12 @@ body {
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  cursor: pointer;
+
   box-shadow: 0 0 3px rgb(145, 144, 144);
 }
 .userName_font_nav {
   font-size: 21px;
-  cursor: pointer;
+
   font-family: "Mallanna", sans-serif;
 }
 
@@ -95,6 +95,7 @@ body {
 .icon_search {
   color: #ffffff;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .input_search:focus {
@@ -162,25 +163,26 @@ body {
 }
 
 .home_icon:hover {
-  color: #0d71c4;
+  color: #0075ff;
 }
 
 .LogOut {
   border: none;
 
-  color: #2388d9;
+  color: #0075ff;
   border-radius: 5px;
   cursor: pointer;
   width: 35px;
   height: 25px;
 
-
+transition: all 0.3s;
   background-color: #ffffff;
   font-weight: bold;
 }
 
 .LogOut:hover {
-  background-color: #0d71c4;
+  background-color: #0075ff;
+  color: #ffffff;
 }
 
 .icon_user{

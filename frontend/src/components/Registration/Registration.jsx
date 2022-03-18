@@ -67,7 +67,6 @@ const Registration = () => {
       }
     } catch (err) {
       console.log(err);
-      console.log("teza");
       toast.error(" Error happened while register, please try again", {
         position: "top-right",
         autoClose: 4000,
@@ -90,6 +89,7 @@ const Registration = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user_id", res.data.userId);
         localStorage.setItem("name", res.data.name);
+        localStorage.setItem("role", res.data.role);
         dispatch(
           loginRed({
             token: res.data.token,
@@ -134,15 +134,35 @@ const Registration = () => {
     <>
       <div className="container_for_all">
         <div className="container_login">
+<div className="overlay-img">
+
           <div className="flex_qout">
             <img
               className="logo_slogan"
               src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1646840924/vjkrmjzhzqiuz83o5mms.png"
             />
-            <div className="slogan">Fix Services</div>
-            <div className="qout"> Fix its a service App</div>
+         <div className="waviy">
+            <span className="slogan" style={{"--i":1}}>F</span>
+            <span className="slogan" style={{"--i":2}}>i</span>
+            <span className="slogan" style={{"--i":3}}>x</span>
+            <span className="slogan" style={{"--i":4}}> &nbsp; </span>
+            <span className="slogan" style={{"--i":5}}>S</span>
+            <span className="slogan" style={{"--i":6}}>e</span>
+            <span className="slogan" style={{"--i":7}}>r</span>
+            <span className="slogan" style={{"--i":8}}>v</span>
+            <span className="slogan" style={{"--i":9}}>i</span>
+            <span className="slogan" style={{"--i":10}}>c</span>
+            <span className="slogan" style={{"--i":11}}>e</span>
+            <span className="slogan" style={{"--i":12}}>s</span>
+            </div>
+
+            <div className="qout"></div>
           </div>
+
+
           <div className="Login">
+            <span className="span-login">Sign In
+</span>
             <div className="all_input_login">
               <div>
                 {" "}
@@ -170,7 +190,8 @@ const Registration = () => {
               </div>
 
               <button className="button_login" onClick={login}>
-                Login
+              Sign In
+
               </button>
             </div>
 
@@ -181,6 +202,10 @@ const Registration = () => {
               </button>
             </div>
           </div>
+
+          </div>
+
+          
         </div>
 
         {modalLogin && (
@@ -244,6 +269,7 @@ const Registration = () => {
                     </div>
 
                     <div className="border_bottom">
+
                       <select
                         onChange={(e) => {
                           setGender(e.target.value);
@@ -254,6 +280,7 @@ const Registration = () => {
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
+                      
                     </div>
 
                     <div className="border_bottom">
