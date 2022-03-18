@@ -9,7 +9,14 @@ import {
   BsPencilSquare,
   BsFillArrowLeftSquareFill,
   BsFillArrowRightSquareFill,
+  BsFillChatDotsFill,
 } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { RiSlideshow2Fill } from "react-icons/ri";
+import { IoGitPullRequestSharp } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const ENDPOINT = "http://localhost:5000";
 const socket = io.connect(ENDPOINT);
 
@@ -25,8 +32,9 @@ const WorkerPage = () => {
   const [workerImage, setWorkerImage] = useState("");
   const [services, setServices] = useState([]);
   const [requests, setRequests] = useState([]);
-  const [hire, setHire] = useState(false);
   const [workerProfileInfo, setWorkerProfileInfo] = useState({});
+  const [uploadVid, setUploadVid] = useState("");
+  const [updateVid, setUpdateVid] = useState("");
   /************************************************************************** */
   const obj_id = localStorage.getItem("Info")
     ? localStorage.getItem("Info")
@@ -57,6 +65,11 @@ const WorkerPage = () => {
 
   const toggleModalWorker = () => {
     setModalWorker(!modalWorker);
+  };
+
+  /*************************************** */
+  const toggleModalChat = () => {
+    setLoggedIn(!loggedIn);
   };
   /******************************************************** */
   const getWorkerById = async () => {
@@ -91,10 +104,31 @@ const WorkerPage = () => {
       );
       if (res.data.success) {
         localStorage.setItem("Info", res.data.workerInfo._id);
+        toast.success(" Your info has been updated successfully", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        getWorkerInfoById();
+        toggleModalWorker();
+
         console.log(res.data);
       }
     } catch (err) {
       console.log(err);
+      toast.error(" Error, please try again", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   /***************************************************************************************** */
@@ -144,6 +178,7 @@ const WorkerPage = () => {
         setTimeout(() => {
           createNewRoom(request_id_Ref);
         }, 100);
+        joinRoom();
       }
     } catch (err) {
       console.log(err);
@@ -195,6 +230,7 @@ const WorkerPage = () => {
         }
       );
       if (res.data.success) {
+        setMessage("");
         console.log(res.data);
       }
     } catch (err) {
@@ -208,7 +244,7 @@ const WorkerPage = () => {
     setLoggedIn(true);
     socket.emit("JOIN_ROOM", room_id_Ref);
   };
-/*************************************************************************** */
+  /*************************************************************************** */
   const sendMessage = () => {
     const messageContent = {
       room_id_Ref,
@@ -221,23 +257,67 @@ const WorkerPage = () => {
     setMessageList([...messageList, messageContent.content]);
     setMessage("");
   };
-/********************************************************* */
-const getAllMessagesByRoomId = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5000/messages/room/${
-            room_id_Ref ? room_id_Ref : localStorage.getItem("room_id_worker")
-          }`
-        );
-        if (res.data.success) {
-          setMessageList(res.data.messages);
-          console.log(res.data.messages[0].message);
-        }
-      } catch (err) {
-        console.log(err);
+  /********************************************************* */
+  const getAllMessagesByRoomId = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/messages/room/${
+          room_id_Ref ? room_id_Ref : localStorage.getItem("room_id_worker")
+        }`
+      );
+      if (res.data.success) {
+        setMessageList(res.data.messages);
       }
-    };
-    /************************************************************** */
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /************************************************************** */
+  const acceptRequest = async (id) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/rooms/single/${id}`);
+      if (res.data.success) {
+        console.log(res.data);
+        localStorage.setItem("room_id_worker", res.data.room._id);
+        console.log(res.data.message);
+      }
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
+  /****************************************************************** */
+  const uploadVideo = async () => {
+    const formData = new FormData();
+    formData.append("file", uploadVid);
+    formData.append("upload_preset", "wyggi4ze");
+
+    await axios
+      .post("https://api.cloudinary.com/v1_1/dvg9eijgb/video/upload", formData)
+      .then((response) => {
+        updateWorkerShop(response.data.secure_url);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
+
+  /****************************************************************** */
+  const updateWorkerShop = async (data) => {
+    try {
+      const res = await axios.put(`http://localhost:5000/workers/${id}`, {
+        workImages: data,
+      });
+
+      if (res.data.success) {
+        setUpdateVid(res.data.vid.workImages);
+      }
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
+  /*************************************************************** */
 
   useEffect(() => {
     getWorkerById();
@@ -256,71 +336,211 @@ const getAllMessagesByRoomId = async () => {
     });
   }, [messageList]);
 
-  /***************************************************************************************************** */
-
+  /********************************************************************************* */
+  console.log("bashar", messageList);
   return (
     <>
       <div className="Container-Profile-Worker">
-        <div className="All-Info-Worker">
-          <img src={worker.image} className="img-worker" />
+        <div className="container-span-all-info-worker">
+          <span className="profile-title-span">
+            Profile <CgProfile className="icons-title" />
+          </span>
+          <div className="All-Info-Worker">
+            <img src={worker.image} className="img-worker" />
 
-          <div className="info-worker-column">
-            {workerProfileInfo.user ? (
-              <>
-                <span>
-                  <span className="span-title">Name: </span>
-                  {worker.name}
-                </span>
-                <span>
-                  <span className="span-title">Profession: </span>
-                  {workerProfileInfo.user.profession.name}
-                </span>
-                <span>
-                  <span className="span-title">Phone: </span>
-                  {worker.phone}
-                </span>
-                <span>
-                  <span className="span-title">Email: </span>
-                  {worker.email}
-                </span>
-                <span>
-                  <span className="span-title">Rate/h: </span>
-                  {workerProfileInfo.user.ratePerHour}$
-                </span>
+            <div className="info-worker-column">
+              {workerProfileInfo.user ? (
+                <>
+                  <span>
+                    <span className="span-title">Name: </span>
+                    {worker.name}
+                  </span>
+                  <span>
+                    <span className="span-title">Profession: </span>
+                    {workerProfileInfo.user.profession.name}
+                  </span>
+                  <span>
+                    <span className="span-title">Phone: </span>
+                    {worker.phone}
+                  </span>
+                  <span>
+                    <span className="span-title">Email: </span>
+                    {worker.email}
+                  </span>
+                  <span>
+                    <span className="span-title">Rate/h: </span>
+                    {workerProfileInfo.user.ratePerHour}$
+                  </span>
 
-                <span className="span-title-skills">
-                  <span className="span-title-inside">Skills: </span>
-                  {workerProfileInfo.user.description}
-                </span>
+                  <span className="span-title-skills">
+                    <span className="span-title-inside">Skills: </span>
+                    {workerProfileInfo.user.description}
+                  </span>
 
-                <span>
-                  <span className="span-title">Status: </span>
-                  {workerProfileInfo.user.status}
-                </span>
-              </>
+                  <span>
+                    <span className="span-title">Status: </span>
+                    {workerProfileInfo.user.status}
+                  </span>
+                </>
+              ) : (
+                "NO INFO"
+              )}
+            </div>
+
+            {localStorage.getItem("role") === "worker" ? (
+              <div></div>
+            ) : requests.length ? (
+              <button
+                className="Button-Chat"
+                onClick={() => {
+                  joinRoom();
+                }}
+              >
+                Chat
+                <BsFillChatDotsFill className="icons-title-chat" />
+              </button>
             ) : (
-              "NO INFO"
+              <button
+                className="Button-hiring"
+                onClick={() => {
+                  createNewRequest();
+                  getRequestsByWorkerId();
+                }}
+              >
+                Hiring
+              </button>
+            )}
+
+            {localStorage.getItem("role") == "worker" &&
+            localStorage.getItem("user_id") == id ? (
+              <BsPencilSquare
+                className="icon-pen-edit"
+                onClick={toggleModalWorker}
+              />
+            ) : (
+              <div></div>
             )}
           </div>
-
-          <button className="Button-hiring" onClick={createNewRequest}>
-            Hiring
-          </button>
-          <BsPencilSquare
-            className="icon-pen-edit"
-            onClick={toggleModalWorker}
-          />
         </div>
 
-        <span className="workshops-title">workshops</span>
-        <div className="worker-projects">
-          <BsFillArrowLeftSquareFill className="icon-arrow" />
-          <img
-            src="https://decor30.com/wp-content/uploads/2018/03/%D8%A7%D9%84%D9%88%D8%A7%D9%86-%D8%AD%D9%88%D8%A7%D8%A6%D8%B7-%D8%BA%D8%B1%D9%81-%D8%A7%D9%84%D9%86%D9%88%D9%85-2018-800x445.jpg"
-            className="img-projects"
-          />
+        <div className="projects-and-request">
+          <div className="container-span-all-info-worker">
+            <span className="workshops-title">
+              workshops <RiSlideshow2Fill className="icons-title" />
+            </span>
+            <div className="worker-projects">
+           
+              <video
+                src={workerProfileInfo.user?.workImages}
+                controls
+                className="img-projects"
+              ></video>
 
-          <BsFillArrowRightSquareFill className="icon-arrow" />
+           
+            </div>
+
+{localStorage.getItem("role") == "worker" &&
+            localStorage.getItem("user_id") == id ?(<div className="media-and-upload">
+
+            <div className="upload_media_post">
+                        <div className="compose-option">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-camera"
+                            id="icon_cam_svg"
+                          >
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                          </svg>
+                          <span className="media">Media</span>
+                          <input
+                            id="feed-upload-input-2"
+                            type="file"
+                            accept=".png, .jpg, .jpeg"
+                            onChange={(e) => {
+                              setUploadVid(e.target.files[0]);
+                            }}
+                          />
+                        </div>
+                      </div>
+            
+            
+                        <button className="button-upload" onClick={uploadVideo}>
+                          Upload
+                        </button>
+            
+            </div>
+                  ):(<></>)}
+     
+
+
+
+
+          </div>
+
+          {localStorage.getItem("role") == "worker" &&
+          localStorage.getItem("user_id") == id ? (
+            <div className="container-span-all-info-worker">
+              <span className="Requests-title-span">
+                Requests <IoGitPullRequestSharp className="icons-title" />
+              </span>
+              <div className="container-requests">
+                <div className="one-request">
+                  {requests.length ? (
+                    requests.map((element, i) => {
+                      return (
+                        <>
+                          <img
+                            src={element.requester.image}
+                            alt=""
+                            className="img-requester"
+                          />
+
+                          <div className="all-info-req">
+                            <div className="name-button-acc">
+                              <div>
+                                <span className="span-title-req">Name: </span>
+                                {element.requester.name}
+                              </div>
+
+                              <button
+                                onClick={() => {
+                                  acceptRequest(element._id);
+
+                                  joinRoom();
+                                  getAllMessagesByRoomId();
+                                }}
+                                className="accept-button"
+                              >
+                                Accept
+                              </button>
+                            </div>
+
+                            <div className="location">
+                              <span className="span-title-req">Location: </span>
+                              {element.requester.location}
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <span>No Requests until now</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
       {/************************************************************************************************* */}
@@ -330,12 +550,13 @@ const getAllMessagesByRoomId = async () => {
           <div onClick={toggleModalWorker} className="overlay-worker"></div>
           <div className="modal-content-worker">
             <div className="workerProfileForm">
-              <div className="border_bottom-worker">
+              <span className="span-profile">Worker Profile </span>
+              <div className="border-bottom-form">
                 <select
                   onChange={(e) => {
                     setProfession(e.target.value);
                   }}
-                  className="profession"
+                  className="input-form-worker"
                 >
                   <option>Profession</option>
                   {services.length ? (
@@ -352,149 +573,131 @@ const getAllMessagesByRoomId = async () => {
                 </select>
               </div>
 
+              {/* <div className="border-bottom-form">
               <input
-                className="workImages"
+                className="input-form-worker"
                 type="text"
                 placeholder="WorkImages"
                 onChange={(e) => {
                   setWorkImages(e.target.value);
                 }}
               />
-              <input
-                className="status"
-                type="text"
-                placeholder="Status"
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
-              />
-              <input
-                className="description"
-                type="text"
-                placeholder="Description"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-              <input
-                className="ratePerHour"
-                type="number"
-                placeholder="Rate Per Hour"
-                onChange={(e) => {
-                  setRatePerHour(e.target.value);
-                }}
-              />
-              <input
-                className="workerImage"
-                type="text"
-                placeholder="worker Image"
-                onChange={(e) => {
-                  setWorkerImage(e.target.value);
-                }}
-              />
+</div> */}
 
-              <button onClick={addWorkerInfo} className="submitButton">
+              <div className="border-bottom-form">
+                <input
+                  className="input-form-worker"
+                  type="text"
+                  placeholder="Status"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="border-bottom-form">
+                <input
+                  className="input-form-worker"
+                  type="text"
+                  placeholder="Description"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="border-bottom-form">
+                <input
+                  className="input-form-worker"
+                  type="number"
+                  placeholder="Rate Per Hour"
+                  onChange={(e) => {
+                    setRatePerHour(e.target.value);
+                  }}
+                />
+              </div>
+
+        <button
+                onClick={() => {
+                  addWorkerInfo();
+                }}
+                className="submitButton"
+              >
                 Submit
               </button>
             </div>
           </div>
         </div>
       )}
-      {/***********************request***************************** */}
-      <div>
-        {requests.length ? (
-          requests.map((element, i) => {
-            return (
-              <>
-                <div
-                  onClick={async () => {
-                    try {
-                      const res = await axios.get(
-                        `http://localhost:5000/rooms/single/${element._id}`
+
+      {loggedIn && (
+        <div className="modal-chat">
+          <div onClick={toggleModalChat} className="overlay-chat"></div>
+          <div className="modal-content-chat">
+            <div className="chat-window">
+              <div className="chat-header">
+                <p className="p-live-chat">
+                  Live Chat <BsFillChatDotsFill className="icons-title-chat" />
+                </p>
+              </div>
+              <div className="chat-body">
+                <ScrollToBottom className="message-container">
+                  {messageList.length ? (
+                    messageList.map((messageContent, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="message"
+                          id={
+                            messageContent?.sender_id?.role === "User"
+                              ? "you"
+                              : "other"
+                          }
+                        >
+                          <div>
+                            <div className="message-content">
+                              <p>{messageContent.message}</p>
+                            </div>
+                            <div className="message-meta">
+                              <p id="time">{messageContent.time}</p>
+                              <p id="author">{messageContent.author}</p>
+                            </div>
+                          </div>
+                        </div>
                       );
-                      if (res.data.success) {
-                        console.log(res.data);
-                        localStorage.setItem(
-                          "room_id_worker",
-                          res.data.room._id
-                        );
-                        console.log(res.data.message);
-                      }
-                    } catch (err) {
-                      console.log(err.response);
-                    }
+                    })
+                  ) : (
+                    <span>Send Message</span>
+                  )}
+                </ScrollToBottom>
+              </div>
+              <div className="chat-footer">
+                <input
+                  type="text"
+                  value={message}
+                  placeholder="Hey..."
+                  onChange={(event) => {
+                    setMessage(event.target.value);
                   }}
-                  className="request"
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && createNewMessage();
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    createNewMessage();
+                    sendMessage();
+                  }}
                 >
-                  Customer: {element.requester.name}
-                </div>
-              </>
-            );
-          })
-        ) : (
-          <span>No Requests until now</span>
-        )}
-      </div>
-      {/*******************************Chat***************************** */}
-      {loggedIn ? (
-        <div className="chat-window">
-          <div className="chat-header">
-            <p>Live Chat</p>
-          </div>
-          <div className="chat-body">
-            <ScrollToBottom className="message-container">
-              {messageList.length ? (
-                messageList.map((messageContent, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="message"
-                      //id={username === messageContent.author ? "you" : "other"}
-                    >
-                      <div>
-                        <div className="message-content">
-                          <p>{messageContent.message}</p>
-                        </div>
-                        <div className="message-meta">
-                          <p id="time">{messageContent.time}</p>
-                          <p id="author">{messageContent.author}</p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <span>Send Message</span>
-              )}
-            </ScrollToBottom>
-          </div>
-          <div className="chat-footer">
-            <input
-              type="text"
-              value={message}
-              placeholder="Hey..."
-              onChange={(event) => {
-                setMessage(event.target.value);
-              }}
-              onKeyPress={(event) => {
-                event.key === "Enter" && sendMessage();
-              }}
-            />
-            <button
-              onClick={() => {
-                createNewMessage();
-                sendMessage();
-              }}
-            >
-              &#9658;
-            </button>
+                  &#9658;
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      ) : (
-        <button onClick={joinRoom}>Stat Chat!</button>
       )}
+
     </>
   );
 };
-
 export default WorkerPage;

@@ -19,6 +19,33 @@ const Navigation = () => {
       name: state.loginReducer.name,
     };
   });
+  const [services, setServices] = useState([]);
+  const [search, setSearch] = useState("");
+  const getAllServices = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/services/");
+      if (res.data.success) {
+        setServices(res.data.services);
+      } else throw Error;
+    } catch (error) {
+      if (!error.response.data.success) {
+        return console.log(`error`);
+      }
+    }
+  };
+
+  const searchService = () => {
+    services.find((e, i) => {
+      if (search.toLowerCase() === e.name.toLowerCase()) {
+        navigate(`/services/${e._id}`);
+        setSearch("");
+      }
+    });
+  };
+
+  useEffect(() => {
+    getAllServices();
+  }, []);
 
   return (
     <>
@@ -37,60 +64,19 @@ const Navigation = () => {
               <input
                 className="input_search"
                 type="text"
-                // value={typing}
+                value={search}
                 placeholder="Find a Service"
-                // onChange={(e) => {
-                //   setTyping(e.target.value);
-                //   filteredSearch(typing);
-                //   if (e.target.value !== "") {
-                //     setModal(true);
-                //   } else {
-                //     setModal(false);
-                //   }
-                // }}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+                onKeyPress={(event) => {
+                  event.key === "Enter" && searchService();
+                }}
               />
             </div>
 
-            <BsSearch className="icon_search" />
+            <BsSearch className="icon_search" onClick={searchService} />
           </div>
-
-          {/* {modal && (
-        <div className="modal_search">
-          <div onClick={toggleModal} className="overlay_search"></div>
-          <div className="modal-content_search">
-            <div className="rod">
-              {searchResult.length ? (
-                searchResult.map((user) => {
-                  return (
-                    <>
-                      <div
-                        className="user_info_rod"
-                        onClick={() => {
-                          navigate(`/profile/${user.id}`);
-                          toggleModal();
-                          setTyping("");
-                        }}
-                      >
-                        <img
-                          src={
-                            user.profileimage !== "undefined"
-                              ? user.profileimage
-                              : noAvatar
-                          }
-                          className="img_search"
-                        />
-                        <span>{user.userName}</span>
-                      </div>
-                    </>
-                  );
-                })
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-        </div>
-      )} */}
         </div>
 
         <div className="home_nav">

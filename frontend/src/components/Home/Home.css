@@ -12,7 +12,7 @@
 }
 
 .title-services {
-  margin: 80px 60px 20px 60px;
+  margin: 115px 60px 20px 60px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -21,7 +21,7 @@
 .title {
   display: flex;
   border-radius: 5px;
-  background-color: brown;
+  background-color: #222;
   height: 40px;
   color: #ffffff;
   align-items: center;
@@ -85,14 +85,14 @@
 }
 
 .text {
-  background-color: #04aa6d;
+  background-color: #0075ff;
   color: white;
   font-size: 17px;
   padding: 16px 32px;
   border-radius: 5px;
 }
 .text:hover {
-  background-color: #028a58;
+  background-color: #025ec7;
   transition: 0.5s ease;
 }
 

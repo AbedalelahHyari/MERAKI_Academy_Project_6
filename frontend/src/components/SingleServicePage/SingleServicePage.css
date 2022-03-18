@@ -1,14 +1,40 @@
 .ContainerSingle {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+ padding: 25px;
+ padding-top: 50px;
+ margin-left: 60px;
 }
 
 .AllOneServices {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+
+ 
+  align-items: flex-start;
+  width: 1090px;
   margin-top: 50px;
 }
 
+.description-title{
+  display: flex;
+
+  gap: 5px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #222;
+  border-radius: 5px;
+  color: #ffffff;
+  height: 35px;
+  align-items: center;
+width: 1090px;
+padding-left: 10px;
+}
+.all-one-and-title{
+  display: flex;
+  flex-direction: column;
+}
 .SingleService {
   display: flex;
   height: 320px;
@@ -20,7 +46,7 @@
   font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
     "Helvetica Neue", Arial, sans-serif;
   text-align: start;
-  margin: 40px 0 0 80px;
+  margin-top:15px;
 }
 
 .container-name-description {
@@ -69,32 +95,31 @@
 .flexColAllWorker {
   display: flex;
   flex-direction: column;
-  margin: 30px 40px 0 40px;
+  gap: 10px;
+  width: 1090px;
 
+
+}
+.workers-flex-row{
+  display: flex;
+  overflow-x: scroll;
 }
 
 .Header {
   display: flex;
-  margin: 10px 0 0 40px;
+
   gap: 5px;
   font-size: 18px;
   font-weight: 600;
-  background-color: brown;
+  background-color: #222;
   border-radius: 5px;
   color: #ffffff;
   height: 35px;
   align-items: center;
-  padding-left: 17px;
+width: 1090px;
+padding-left: 10px;
 }
 
-.ContainerWorkers {
-  display: flex;
-  gap: 25px;
-
-  width: 400px;
-  padding: 10px;
-  margin: 10px;
-}
 
 .worker_info {
   display: flex;
@@ -109,19 +134,19 @@
   margin-left: 20px;
   margin-bottom: 50px;
   height: 190px;
-  padding-top: 15px;
+  padding: 10px;
+  border: 0.5px solid #222;
 }
 .worker_info:hover {
   background-color: aliceblue;
-  border-radius: 10px;
   cursor: pointer;
 }
 
 .img_worker {
-  width: 55px;
+  width: 56px;
   height: 55px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
 
   box-shadow: 0 0 3px rgb(145, 144, 144);
 }
@@ -139,13 +164,13 @@
   border: none;
   font-size: 17px;
   border-radius: 7px;
-  background-color: brown;
+  background-color: #0075ff;
   transition: all 0.4s;
   cursor: pointer;
 }
 
 .connect-button:hover {
-  background-color: rgb(128, 14, 14);
+  background-color:#055fc7;
 }
 .icon_worker {
   font-size: 25px;
