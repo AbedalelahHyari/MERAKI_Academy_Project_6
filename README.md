@@ -1,11 +1,11 @@
 # MERAKI_Academy_Project_6
 
-<!-- <p align="center">
+<p align="center">
   <a href="" rel="noopener">
-  <img width=200px height=200px src="" alt="Project logo"></a>
-</p>  !-->
+ <img width=350px height=200px src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1647279278/mxvkm10itp3ntzofuu8u.png" alt="Project logo"></a>
+</p>
 
-<h3 align="center">FIX</h3>
+<h3 align="center">Fix service</h3>
 
 ---
 
