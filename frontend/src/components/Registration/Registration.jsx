@@ -134,78 +134,96 @@ const Registration = () => {
     <>
       <div className="container_for_all">
         <div className="container_login">
-<div className="overlay-img">
-
-          <div className="flex_qout">
-            <img
-              className="logo_slogan"
-              src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1646840924/vjkrmjzhzqiuz83o5mms.png"
-            />
-         <div className="waviy">
-            <span className="slogan" style={{"--i":1}}>F</span>
-            <span className="slogan" style={{"--i":2}}>i</span>
-            <span className="slogan" style={{"--i":3}}>x</span>
-            <span className="slogan" style={{"--i":4}}> &nbsp; </span>
-            <span className="slogan" style={{"--i":5}}>S</span>
-            <span className="slogan" style={{"--i":6}}>e</span>
-            <span className="slogan" style={{"--i":7}}>r</span>
-            <span className="slogan" style={{"--i":8}}>v</span>
-            <span className="slogan" style={{"--i":9}}>i</span>
-            <span className="slogan" style={{"--i":10}}>c</span>
-            <span className="slogan" style={{"--i":11}}>e</span>
-            <span className="slogan" style={{"--i":12}}>s</span>
-            </div>
-
-            <div className="qout"></div>
-          </div>
-
-
-          <div className="Login">
-            <span className="span-login">Sign In
-</span>
-            <div className="all_input_login">
-              <div>
-                {" "}
-                <input
-                  className="input_login"
-                  type="email"
-                  placeholder="Email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <input
-                  className="input_login"
-                  type="password"
-                  placeholder="Password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  onKeyPress={(event) => {
-                    event.key === "Enter" && login();
-                  }}
-                />
+          <div className="overlay-img">
+            <div className="flex_qout">
+              <img
+                className="logo_slogan"
+                src="https://res.cloudinary.com/dvg9eijgb/image/upload/v1646840924/vjkrmjzhzqiuz83o5mms.png"
+              />
+              <div className="waviy">
+                <span className="slogan" style={{ "--i": 1 }}>
+                  F
+                </span>
+                <span className="slogan" style={{ "--i": 2 }}>
+                  i
+                </span>
+                <span className="slogan" style={{ "--i": 3 }}>
+                  x
+                </span>
+                <span className="slogan" style={{ "--i": 4 }}>
+                  {" "}
+                  &nbsp;{" "}
+                </span>
+                <span className="slogan" style={{ "--i": 5 }}>
+                  S
+                </span>
+                <span className="slogan" style={{ "--i": 6 }}>
+                  e
+                </span>
+                <span className="slogan" style={{ "--i": 7 }}>
+                  r
+                </span>
+                <span className="slogan" style={{ "--i": 8 }}>
+                  v
+                </span>
+                <span className="slogan" style={{ "--i": 9 }}>
+                  i
+                </span>
+                <span className="slogan" style={{ "--i": 10 }}>
+                  c
+                </span>
+                <span className="slogan" style={{ "--i": 11 }}>
+                  e
+                </span>
+                <span className="slogan" style={{ "--i": 12 }}>
+                  s
+                </span>
               </div>
 
-              <button className="button_login" onClick={login}>
-              Sign In
-
-              </button>
+              <div className="qout"></div>
             </div>
 
-            <div className="sperate_style">
-              <div className="line_login"></div>
-              <button className="craete_new_account" onClick={toggleModal}>
-                Craete new account
-              </button>
+            <div className="Login">
+              <span className="span-login">Sign In</span>
+              <div className="all_input_login">
+                <div>
+                  {" "}
+                  <input
+                    className="input_login"
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <input
+                    className="input_login"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    onKeyPress={(event) => {
+                      event.key === "Enter" && login();
+                    }}
+                  />
+                </div>
+
+                <button className="button_login" onClick={login}>
+                  Sign In
+                </button>
+              </div>
+
+              <div className="sperate_style">
+                <div className="line_login"></div>
+                <button className="craete_new_account" onClick={toggleModal}>
+                  Craete new account
+                </button>
+              </div>
             </div>
           </div>
-
-          </div>
-
-          
         </div>
 
         {modalLogin && (
@@ -269,7 +287,6 @@ const Registration = () => {
                     </div>
 
                     <div className="border_bottom">
-
                       <select
                         onChange={(e) => {
                           setGender(e.target.value);
@@ -280,7 +297,6 @@ const Registration = () => {
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
-                      
                     </div>
 
                     <div className="border_bottom">
